@@ -17,17 +17,27 @@
         </div>
         <div class="card-right col-md-7">
             <h3>Login</h3>
-            <form>
+            <form action="" method="post">
+                {% csrf_token %}
                 <div class="mb-3">
                     <label for="email" class="form-label">UserName</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email" name="uname">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" name="password">
                 </div>
                 <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
-                <button type="button" class="btn btn-social w-100">Register</button>
+                <a href="register"><button type="button" class="btn btn-social w-100">Register</button></a>
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissible">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+
             </form>
         </div>
     </div>
