@@ -1,0 +1,38 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Parkinsans:wght@300..800&display=swap');
+ 
+body {
+    font-family: "Parkinsans", sans-serif;
+    font-optical-sizing: auto;
+    background-color: #f8f9fa;
+}
+.hero-section {
+    background-image: url('../images/freepik__expand__36926.png');
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center;
+    color: white; 
+    text-align: center; 
+    padding: 100px 20px; 
+}
+.form-control:hover, .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+.btn-submit {
+    transition: transform 0.3s;
+}
+.btn-submit:hover {
+    transform: scale(1.05);
+}
+.contact-info-card {
+    transition: transform 0.3s;
+}
+.contact-info-card:hover {
+    transform: scale(1.1);
+}
+
+.visit_us h3{
+    font-size: xx-large;
+    margin-left: 50px;
+}

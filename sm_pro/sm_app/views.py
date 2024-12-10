@@ -108,3 +108,8 @@ def register(req):
         return redirect(sm_login) 
     else:
         return render(req,'user/register.html') 
+    
+def about(req) :
+    return render(req,'user/about.html')
+def contact(req) :
+    return render(req,'user/contact.html')

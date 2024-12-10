@@ -1,0 +1,28 @@
+/*----------------about---------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Parkinsans:wght@300..800&display=swap');
+body 
+{
+    font-family: "Parkinsans", sans-serif;
+    font-optical-sizing: auto;
+}
+.hero-section {
+    background-image: url('../images/about.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center;
+    color: white; 
+    text-align: center; 
+    padding: 100px 20px; 
+}
+.section-title-about {
+    margin: 40px 0;
+    font-weight: bold;
+    font-size: xx-large;
+    }
+.card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s;
+}
+.card{
+    background-color: #e2e2e2;
+}

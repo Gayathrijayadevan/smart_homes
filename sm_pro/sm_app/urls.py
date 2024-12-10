@@ -8,6 +8,8 @@ urlpatterns=[
     #------------USER------------------
     path('register',views.register),
     path('user_home',views.user_home),
+    path('about',views.about),
+    path('contact',views.contact),
     #------------ADMIN-----------------
     path('admin_home',views.admin_home),
     path('add_pro',views.add_products),
