@@ -57,62 +57,37 @@
                 </div>
             </div>
         </div>
-    
-        <div class="container">
-            <h2 class="section-title">Mood Lighting</h2>
-            <div class="row gy-4">
-              <!-- Product Card 1 -->
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="product-card">
-                  <img src="https://via.placeholder.com/150" alt="Product 1">
-                  <div class="product-title">LIFX White 800 A19</div>
-                  <div class="product-price">₹6,999.00</div>
-                </div>
-              </div>
-              <!-- Product Card 2 -->
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="product-card">
-                  <img src="https://via.placeholder.com/150" alt="Product 2">
-                  <div class="product-title">LIFX Color 1000 A19</div>
-                  <div class="product-price">₹7,499.00</div>
-                </div>
-              </div>
-              <!-- Product Card 3 -->
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="product-card">
-                  <img src="https://via.placeholder.com/150" alt="Product 3">
-                  <div class="product-title">Zemote 12V LED Strip Dimmer</div>
-                  <div class="product-price">₹3,360.00</div>
-                </div>
-              </div>
-              <!-- Product Card 4 -->
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="product-card">
-                  <img src="https://via.placeholder.com/150" alt="Product 4">
-                  <div class="product-title">Wozart Switch Controller Mini</div>
-                  <div class="product-price">₹6,599.00</div>
-                </div>
-              </div>
-              <!-- Product Card 5 with Sale Badge -->
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="product-card product-wrapper">
-                  <div class="sale-badge">Sale!</div>
-                  <img src="https://via.placeholder.com/150" alt="Product 5">
-                  <div class="product-title">Dimmable LED Driver</div>
-                  <div class="product-price">₹2,999.00</div>
-                </div>
-              </div>
-              <!-- Product Card 6 -->
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="product-card">
-                  <img src="https://via.placeholder.com/150" alt="Product 6">
-                  <div class="product-title">RGB Controller</div>
-                  <div class="product-price">₹3,500.00</div>
-                </div>
-              </div>
-            </div>
-          </div>
         
+        <header class="py-4 text-center">
+          <h1 class="fw-bold">Our Store</h1>
+          <p class="text-muted">Browse through our categories and find the best products for you!</p>
+      </header>
+
+        {% for c in c %}
+        <div class="container">
+            <h2 class="section-title">{{ c.Category_name }}</h2>
+            <div class="row gy-4">
+              {% for p in p %}
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card">
+                  <img src="{p.img.url}" alt="Product 1">
+                  <div class="product-title">{p.name}</div>
+                  <p>Price: <del style="text-decoration: line-through;"class="text-danger">${{ p.price }}</del>
+                    <span class="text-success fw-bold">${{ p.offer_price }}</span>
+                  </p>
+                </div>
+              </div>
+              {% endfor %}
+            </div>  
+        </div>
+        {% endfor %}
+        
+          <div class="sale-banner">
+            <h1>View All of Our On-Sale Items</h1>
+            <p>For a limited time only, all of our vintage products are 50% off! Don’t miss your chance to save big on these wonderful items.</p>
+            <a href="#" class="btn btn-outline-light">Shop Now</a>
+        </div>
+
         <!-- Bootstrap Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Bootstrap Icons -->

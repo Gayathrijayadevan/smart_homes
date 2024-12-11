@@ -131,3 +131,27 @@ body
   .product-wrapper {
     position: relative;
   }
+  .sale-banner {
+    background-color: #23b1ad;
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+}
+.sale-banner h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+.sale-banner p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+.sale-banner .btn {
+    border: 2px solid white;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+}
+.sale-banner .btn:hover {
+    background-color: white;
+    color: #23b1ad;
+}
