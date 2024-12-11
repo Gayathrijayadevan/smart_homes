@@ -1,16 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-
 # Create your models here.
+
+class Category(models.Model):
+    Category_name=models.TextField()
+
 class Product(models.Model):
     pid=models.TextField()
     name=models.TextField()
     des=models.TextField()
     price=models.IntegerField()
     offer_price=models.IntegerField()
-    categorie=models.TextField()
     stock=models.IntegerField()
+    category=models.ForeignKey(Category,on_delete=models.CASCADE)
+    brand=models.TextField(null=True, blank=True)
+    dimension=models.TextField(null=True, blank=True)
+    weight=models.TextField(null=True, blank=True)
     img=models.FileField()
 
 class Cart(models.Model) :

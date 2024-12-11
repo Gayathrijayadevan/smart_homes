@@ -56,3 +56,34 @@ body
     max-width: 100%;
     border-radius: 10px;
   }
+  .features-section {
+    background-color: #fff;
+    padding: 50px 0;
+  }
+  .feature-card {
+    text-align: center;
+    padding: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: #fefefe;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .feature-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  .feature-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+  }
+  .feature-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  .feature-description {
+    font-size: 1rem;
+    color: #555;
+  }

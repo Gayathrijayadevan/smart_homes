@@ -35,29 +35,30 @@ def sm_logout(req):
     return redirect(sm_login)
 #--------------------admin----------------------
 def admin_home(req):
-    if 'shop' in req.session:
+    if 'admin' in req.session:
         data=Product.objects.all()
         return render(req,'admin/ad_home.html',{'Products':data})
     else:
         return redirect(sm_login)
 
 def add_products(req) :
-    if 'shop' in req.session:
+    if 'admin' in req.session:
         if req.method=='POST':
             pid=req.POST['pid']
             pname=req.POST['name']
             des=req.POST['descrip']
             pprice=req.POST['price']
             oprice=req.POST['off_price']
-            cate=req.POST['Category']
+            cate=req.POST['category']
             pstock=req.POST['stock']
             file=req.FILES['img']
-
-            data=Product.objects.create(pid=pid,name=pname,des=des,price=pprice,offer_price=oprice,categorie=cate,stock=pstock,img=file)
+            cat=Category.objects.get(pk=cate)
+            data=Product.objects.create(pid=pid,name=pname,des=des,price=pprice,offer_price=oprice,categorie=cat,stock=pstock,img=file)
             data.save()
             return redirect(admin_home)
         else:
-            return render(req,'admin/add_pro.html')
+            cate=Category.objects.all()
+            return render(req,'admin/add_pro.html',{'cate':cate})
     else:
         return redirect(sm_login)    
     
@@ -90,6 +91,22 @@ def delete_product(req,pid):
     os.remove('media/'+file)
     data.delete()
     return redirect(admin_home)    
+
+def add_category(req):
+    if 'admin' in req.session:
+        if req.method=='POST':
+            c_name=req.POST['cate_name']
+            c_name=c_name.lower()
+            try:
+                cate=Category.objects.get(Category_name=c_name)
+            except:
+                data=Category.objects.create(Category_name=c_name)
+                data.save()
+            return redirect(add_category)
+        categories=Category.objects.all()
+        return render(req,'admin/cate.html' ,{'cate':categories})
+    else:
+        return render(admin_home)
 #-------------user------------------------------
 def user_home  (req)  :
     return render(req,'user/user_home.html')
@@ -113,3 +130,5 @@ def about(req) :
     return render(req,'user/about.html')
 def contact(req) :
     return render(req,'user/contact.html')
+def store(req):
+    return render(req,'user/store.html')
