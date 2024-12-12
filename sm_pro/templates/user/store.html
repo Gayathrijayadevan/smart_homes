@@ -63,25 +63,63 @@
           <p class="text-muted">Browse through our categories and find the best products for you!</p>
       </header>
 
-        {% for c in c %}
+        {% for l in light %}
         <div class="container">
-            <h2 class="section-title">{{ c.Category_name }}</h2>
+            <h2 class="section-title">{{ l.category.Category_name }}</h2>
             <div class="row gy-4">
-              {% for p in p %}
               <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="product-card">
-                  <img src="{p.img.url}" alt="Product 1">
-                  <div class="product-title">{p.name}</div>
-                  <p>Price: <del style="text-decoration: line-through;"class="text-danger">${{ p.price }}</del>
-                    <span class="text-success fw-bold">${{ p.offer_price }}</span>
-                  </p>
-                </div>
+                <a href="pro_dtl/{{l.pk}}"style="text-decoration: none;">
+                    <div class="product-card">
+                      <img src="{{l.img.url}}" alt="Product 1">
+                      <div class="product-title">{{l.name}}</div>
+                      <p>Price: <del style="text-decoration: line-through;"class="text-muted">₹{{ l.price }}</del>
+                        <span class="text-dark fw-bold ">₹{{ l.offer_price }}</span>
+                      </p>
+                    </div>
+                </a>
               </div>
-              {% endfor %}
             </div>  
         </div>
         {% endfor %}
         
+        {% for m in multimedia %}
+        <div class="container">
+            <h2 class="section-title">{{ m.category.Category_name }}</h2>
+            <div class="row gy-4">
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <a href="pro_dtl/{{m.pk}}" style="text-decoration: none;">
+                    <div class="product-card">
+                      <img src="{{m.img.url}}" alt="Product 1">
+                      <div class="product-title">{{m.name}}</div>
+                      <p>Price: <del style="text-decoration: line-through;"class="text-muted">₹{{ m.price }}</del>
+                        <span class="text-dark fw-bold">₹{{ m.offer_price }}</span>
+                      </p>
+                    </div>
+                </a>
+              </div>
+            </div>  
+        </div>
+        {% endfor %}
+
+        {% for h in homeapp %}
+        <div class="container">
+            <h2 class="section-title">{{ h.category.Category_name }}</h2>
+            <div class="row gy-4">
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <a href="pro_dtl/{{h.pk}}"style="text-decoration: none;">
+                    <div class="product-card">
+                      <img src="{{h.img.url}}" alt="Product 1">
+                      <div class="product-title">{{h.name}}</div>
+                      <p>Price: <del style="text-decoration: line-through;"class="text-muted">₹{{ h.price }}</del>
+                        <span class="text-dark fw-bold">₹{{ h.offer_price }}</span>
+                      </p>
+                    </div>
+                </a>
+              </div>
+            </div>  
+        </div>
+        {% endfor %}
+
           <div class="sale-banner">
             <h1>View All of Our On-Sale Items</h1>
             <p>For a limited time only, all of our vintage products are 50% off! Don’t miss your chance to save big on these wonderful items.</p>

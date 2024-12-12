@@ -109,7 +109,8 @@ def add_category(req):
         return render(admin_home)
 #-------------user------------------------------
 def user_home  (req)  :
-    return render(req,'user/user_home.html')
+    categories=Category.objects.all()
+    return render(req,'user/user_home.html',{'nav_cat':categories})
 
 def register(req):
     if req.method=='POST':
@@ -127,11 +128,33 @@ def register(req):
         return render(req,'user/register.html') 
     
 def about(req) :
-    return render(req,'user/about.html')
-def contact(req) :
-    return render(req,'user/contact.html')
+    categories=Category.objects.all()
+    return render(req,'user/about.html',{'nav_cat':categories})
 
-def store(req,cid):
-    category=Category.objects.get(id=cid)
-    products=category.products.all()
-    return render(req,'user/store.html',{'c':category, 'p':products})
+def contact(req) :
+    categories=Category.objects.all()
+    return render(req,'user/contact.html',{'nav_cat':categories})
+
+def store(req):
+    data=Category.objects.get(Category_name='lighting')
+    lighting=Product.objects.filter(category=data)
+
+    data=Category.objects.get(Category_name='multimedia')
+    multimedia=Product.objects.filter(category=data)
+
+    data=Category.objects.get(Category_name='home appliances')
+    home_applia=Product.objects.filter(category=data)
+
+    return render(req,'user/store.html',{'light':lighting, 'multimedia':multimedia,'homeapp':home_applia})
+
+def view_pro_dtls(req,pid):
+    pro_dtl=Product.objects.get(pk=pid)
+
+    data=pro_dtl.des.split('Product Features')
+    des=data[0]
+    fet=data[-1]
+    split_data=fet.split('\n')
+    split_data=[i for i in split_data if len(i)>5]
+    print(split_data)
+    return render(req,'user/product_dtls.html', {'dtl':pro_dtl,'split_data':split_data,'des':des})
+

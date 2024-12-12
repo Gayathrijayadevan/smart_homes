@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Parkinsans:wght@300..800&display=swap');
+
+body {
+    font-family: "Parkinsans", sans-serif;
+    font-optical-sizing: auto;
+    background-color:rgb(230, 230, 231);
+    color: #343a40;
+    padding: 50px;
+    margin: 20px;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+.product-image {
+    max-width: 90%;
+    margin: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.feature-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.feature-list li {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 20px;
+}
+
+.feature-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.features-heading {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    letter-spacing: 1.5px;
+}
+
+.features-description {
+    font-size: 1rem;
+    color: #6c757d;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: auto;
+}
+
+.btn-call-to-action {
+    background-color: #ffc107;
+    color: #000;
+    font-size: 1.2rem;
+    padding: 12px 30px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-call-to-action:hover {
+    background-color: #e0a800;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.5);
+}

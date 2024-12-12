@@ -28,11 +28,9 @@
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style="color: rgba(255,188,58,255);">Categories</a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="upload">Lighting</a></li>
-                      <li><a class="dropdown-item" href="upload">Home Security</a></li>
-                      <li><a class="dropdown-item" href="upload">Interactive Home</a></li>
-                      <li><a class="dropdown-item" href="upload">Multimedia</a></li>
-                      <li><a class="dropdown-item" href="upload">Home Appliances</a></li>
+                      {% for n in nav_cat %}
+                        <li><a class="dropdown-item" href="">{{n.Category_name}}</a></li>
+                      {% endfor %}
                     </ul>
                   </li>
                   <li class="nav-item">
