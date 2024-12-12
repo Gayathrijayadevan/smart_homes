@@ -136,6 +136,11 @@ def contact(req) :
     return render(req,'user/contact.html',{'nav_cat':categories})
 
 def store(req):
+
+    query=req.POST['searches']
+    if query:
+        product=Product.objects.filter(Q())
+
     data=Category.objects.get(Category_name='lighting')
     lighting=Product.objects.filter(category=data)
 
@@ -157,4 +162,9 @@ def view_pro_dtls(req,pid):
     split_data=[i for i in split_data if len(i)>5]
     print(split_data)
     return render(req,'user/product_dtls.html', {'dtl':pro_dtl,'split_data':split_data,'des':des})
+
+def cart(req):
+    user=User.objects.get(username=req.session['user'])
+    data=Cart.objects.filter(user=user)
+    return render(req,'user/cart.html',{'cart':data})
 

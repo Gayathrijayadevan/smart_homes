@@ -52,8 +52,11 @@
             <div class="search-box">
                 <h1>India's Most-Trusted Smart Store</h1>
                 <div class="position-relative d-inline-block">
-                    <input type="text" class="form-control" placeholder="Search for a brand or product...">
+                  <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="text" class="form-control" placeholder="Search for a brand or product..." name="searches">
                     <button class="btn"><i class="bi bi-search"></i></button>
+                  </form>
                 </div>
             </div>
         </div>

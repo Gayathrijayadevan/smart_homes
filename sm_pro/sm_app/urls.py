@@ -12,6 +12,7 @@ urlpatterns=[
     path('contact',views.contact),
     path('store',views.store),
     path('pro_dtl/<pid>',views.view_pro_dtls),
+    path('cart',views.cart),
     #------------ADMIN-----------------
     path('admin_home',views.admin_home),
     path('add_pro',views.add_products),
