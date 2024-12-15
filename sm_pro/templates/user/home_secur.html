@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Security Layout</title>
+    <!-- Bootstrap CDN -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('your-image-url.jpg') center center/cover no-repeat;
+            height: 70vh;
+            color: #000;
+        }
+        .hero-overlay {
+            background: rgba(255, 255, 255, 0.8); /* White transparent overlay */
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #212529; /* Dark color for heading */
+            margin-bottom: 10px;
+        }
+        .hero-description {
+            font-size: 1.1rem;
+            max-width: 600px;
+            color: #555;
+            line-height: 1.6;
+        }
+        .hero-overlay img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        /* Additional Styling */
+        .content-section {
+            padding: 50px 20px;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-overlay">
+            <h1 class="hero-title">Take Your Home With You</h1>
+            <p class="hero-description">
+                Protect your home from intruders. Keep a tab on visitors. Lock and unlock your doors
+                from anywhere. Get instant notifications on your smartphone and trigger a loud
+                alarm, if someone tries to break into your home.
+            </p>
+            <!-- Optional: Add a placeholder image -->
+            <img src="your-placeholder-image.jpg" alt="Smart Security Image">
+        </div>
+    </section>
+
+    <!-- Additional Content Section -->
+    <section class="content-section">
+        <h2>Smart Security Solutions</h2>
+        <p>Experience the next level of home security with cutting-edge technology.</p>
+    </section>
+
+    <!-- Bootstrap JS CDN (Optional for JS functionality) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

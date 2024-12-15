@@ -4,46 +4,55 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Category form</title>
+    <title>Category Form</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/admin_sty.css' %}">
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light shadow-sm"style="background-color:rgba(48,47,47,255);">
-        <div class="container">
-          <a class="navbar-brand" href="admin_home">
-            <img src="{% static 'images/smart home logo.png' %}" alt=""style="height: 100px;">
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="add_pro" style="color: rgba(255,188,58,255);">Add Product</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="add_cate" style="color: rgba(255,188,58,255);">Add Categories</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#" style="color: rgba(255,188,58,255);">View Booking</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" style="color: rgba(255,188,58,255);" href="logout">Logout</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+<body style="background: linear-gradient(135deg, #f5f7fa, #c3cfe2); font-family: Arial, sans-serif; color: #333;">
 
-    <form action="" method="post">
-        {% csrf_token %}
-        <div class="form-control">
-            <label for="Category_name">Category</label>
-            <input type="text" name="cate_name" placeholder="enter product Category">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: #0e1527; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); padding: 15px 0;">
+        <div class="container">
+            <a class="navbar-brand" href="admin_home">
+                <img src="{% static 'images/sm_logo.png' %}" alt="Logo" style="height: 70px; transition: transform 0.3s ease-in-out;">
+            </a>
         </div>
-        <button type="submit" class="btn btn-primary btn-block">submit</button>
-    </form>
+    </nav>
+
+    <!-- Form Container -->
+    <div class="container d-flex justify-content-center align-items-center" style="height: 90vh;">
+        <div class="card shadow-lg" style="width: 100%; max-width: 500px; background: white; border-radius: 15px; padding: 30px;">
+            <h2 class="text-center mb-4" style="color: #0e1527; font-weight: bold;">Add Category</h2>
+
+            <!-- Form -->
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="Category_name" style="font-weight: bold;">Category Name</label>
+                    <input 
+                        type="text" 
+                        name="cate_name" 
+                        placeholder="Enter product category" 
+                        class="form-control" 
+                        style="border-radius: 30px; padding: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #ddd;"
+                        required
+                    >
+                </div>
+
+                <!-- Submit Button -->
+                <button 
+                    type="submit" 
+                    class="btn btn-primary btn-block" 
+                    style="background: #3498db; border: none; border-radius: 30px; padding: 10px; font-size: 1.1rem; font-weight: bold; transition: background 0.3s;"
+                    onmouseover="this.style.background='#2980b9';"
+                    onmouseout="this.style.background='#3498db';"
+                >
+                    Submit
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

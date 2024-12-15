@@ -35,11 +35,33 @@ def sm_logout(req):
     return redirect(sm_login)
 #--------------------admin----------------------
 def admin_home(req):
-    if 'admin' in req.session:
-        data=Product.objects.all()
-        return render(req,'admin/ad_home.html',{'Products':data})
-    else:
-        return redirect(sm_login)
+    # if 'admin' in req.session:
+    #     data=Product.objects.all()
+    return render(req,'admin/ad_home.html')
+    # else:
+    #     return redirect(sm_login)
+
+def ad_viewp(req):
+    data=Category.objects.get(Category_name='lighting')
+    lighting=Product.objects.filter(category=data)
+
+    data=Category.objects.get(Category_name='multimedia')
+    multimedia=Product.objects.filter(category=data)
+
+    data=Category.objects.get(Category_name='home appliances')
+    home_applia=Product.objects.filter(category=data)
+
+    return render(req,'admin/view_pro.html',{'light':lighting, 'multimedia':multimedia,'homeapp':home_applia})
+
+def ad_pro_dtls(req,pid):
+    pro_dtl=Product.objects.get(pk=pid)
+
+    data=pro_dtl.des.split('Product Features')
+    des=data[0]
+    fet=data[-1]
+    split_data=fet.split('\n')
+    split_data=[i for i in split_data if len(i)>5]
+    return render(req,'admin/pro_details.html', {'dtl':pro_dtl,'split_data':split_data,'des':des})
 
 def add_products(req) :
     if 'admin' in req.session:
@@ -62,27 +84,38 @@ def add_products(req) :
     else:
         return redirect(sm_login)    
     
-def edit_product(req,pid) :
-        if req.method=='POST':
-            proid=req.POST['proid']
-            pname=req.POST['name']
-            des=req.POST['descrip']
-            pprice=req.POST['price']
-            oprice=req.POST['off_price']
-            cate=req.POST['Category']
-            pstock=req.POST['stock']
-            file=req.FILES.get('img')
-            if file:
-                Product.objects.filter(pk=pid).update(pid=proid,name=pname,des=des,price=pprice,offer_price=oprice,categorie=cate,stock=pstock,img=file)
-                data=Product.objects.get(pk=pid)
-                data.img=file
-                data.save()
-            else:  
-                Product.objects.filter(pk=pid).update(pid=pid,name=pname,des=des,price=pprice,offer_price=oprice,stock=pstock,img=file)
-            return redirect(admin_home)
-        else:
-            data=Product.objects.get(pk=pid)
-            return render(req,'admin/edit_pro.html',{'data':data})
+def edit_product(req, pid):
+    if req.method == 'POST':
+        proid = req.POST['proid']
+        pname = req.POST['name']
+        des = req.POST['descrip']
+        pprice = req.POST['price']
+        oprice = req.POST['off_price']
+        cate = req.POST['Category']
+        pstock = req.POST['stock']
+        file = req.FILES.get('img')
+        
+        product = Product.objects.get(pk=pid)
+
+        # Update fields with the new values
+        product.pid = proid
+        product.name = pname
+        product.des = des
+        product.price = pprice
+        product.offer_price = oprice
+        product.stock = pstock
+        product.category = Category.objects.get(Category_name=cate)  # Assuming category exists
+        
+        if file:
+            product.img = file
+        
+        product.save()
+        return redirect(admin_home)
+    else:
+        # Fetch the current product data
+        data = Product.objects.get(pk=pid)
+        return render(req, 'admin/edit_pro.html', {'data': data})
+
 
 def delete_product(req,pid):
     data=Product.objects.get(pk=pid)
@@ -106,7 +139,7 @@ def add_category(req):
         categories=Category.objects.all()
         return render(req,'admin/cate.html' ,{'cate':categories})
     else:
-        return render(admin_home)
+        return render(req,'admin\cate.html')
 #-------------user------------------------------
 def user_home  (req)  :
     categories=Category.objects.all()
@@ -137,9 +170,9 @@ def contact(req) :
 
 def store(req):
 
-    query=req.POST['searches']
-    if query:
-        product=Product.objects.filter(Q())
+    # query=req.POST['searches']
+    # if query:
+    #     product=Product.objects.filter(Q())
 
     data=Category.objects.get(Category_name='lighting')
     lighting=Product.objects.filter(category=data)
@@ -168,3 +201,7 @@ def cart(req):
     data=Cart.objects.filter(user=user)
     return render(req,'user/cart.html',{'cart':data})
 
+def lighting(req):
+    data=Category.objects.get(Category_name='lighting')
+    lighting=Product.objects.filter(category=data)
+    return render(req,'',{'light':lighting})

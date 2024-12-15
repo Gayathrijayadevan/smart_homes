@@ -2,6 +2,7 @@
  <html lang="en">
  
  <head>
+    {% load static %}
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Add Products Page</title>
@@ -9,39 +10,48 @@
      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
  </head>
  
- <body>
-     <div class="container mt-5">
-         <h2 class="text-center mb-4">Add New Product</h2>
+ <body style="background: linear-gradient(135deg, #f5f7fa, #c3cfe2); font-family: Arial, sans-serif; color: #333;">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: #0e1527; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); padding: 15px 0;">
+        <div class="container">
+            <a class="navbar-brand" href="admin_home">
+                <img src="{% static 'images/sm_logo.png' %}" alt="Logo" style="height: 70px; transition: transform 0.3s ease-in-out;">
+            </a>
+        </div>
+    </nav>
+
+     <div class="container mt-5"style=" background: white; border-radius: 15px; padding: 30px;">
+         <h2 class="text-center mb-4" style="color: #0e1527; font-weight: bold;">Add New Product</h2>
          <form action="" method="post" class="p-4 shadow-sm bg-white rounded" enctype="multipart/form-data">
              {% csrf_token %}
              <div class="form-group">
                  <label for="pid"><b>Product ID</b></label>
-                 <input type="text" class="form-control" name="pid" id="pid" placeholder="Enter product ID">
+                 <input type="text" class="form-control" name="pid" id="pid" placeholder="Enter product ID"style="border-radius: 30px; padding: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #ddd;">
              </div>
  
              <div class="form-group">
                  <label for="name"><b>Product Name</b></label>
-                 <input type="text" class="form-control" name="name" id="name" placeholder="Enter product name">
+                 <input type="text" class="form-control" name="name" id="name" placeholder="Enter product name" style="border-radius: 30px; padding: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #ddd;">
              </div>
  
              <div class="form-group">
                  <label for="descrip"><b>Description</b></label>
-                 <textarea class="form-control" name="descrip" id="descrip" rows="3" placeholder="Enter product description"></textarea>
+                 <textarea class="form-control" name="descrip" id="descrip" rows="3" placeholder="Enter product description"></textarea style="border-radius: 30px; padding: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #ddd;">
              </div>
  
              <div class="form-group">
                  <label for="price"><b>Price</b></label>
-                 <input type="number" class="form-control" name="price" id="price" placeholder="Enter price">
+                 <input type="number" class="form-control" name="price" id="price" placeholder="Enter price" style="border-radius: 30px; padding: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #ddd;">
              </div>
  
              <div class="form-group">
                  <label for="offer_price"><b>Offer Price</b></label>
-                 <input type="number" class="form-control" name="off_price" id="offer_price" placeholder="Enter offer price">
+                 <input type="number" class="form-control" name="off_price" id="offer_price" placeholder="Enter offer price" style="border-radius: 30px; padding: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #ddd;">
              </div>
  
              <div class="form-group">
                 <label for="brand" class="form-label"><b>Category</b></label>
-                        <select class="form-control" id="brand" name="category">
+                        <select class="form-control" id="brand" name="category" style="border-radius: 30px; padding: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #ddd;">
                             <option value="">Select Category</option>
                             {% for c in cate %}
                             <option value="{{c.pk}}">{{ c.Category_name }}</option>
@@ -51,30 +61,32 @@
             
             <div class="form-group">
                 <label for="stock"><b>brand</b></label>
-                <input type="number" class="form-control" name="stock" id="stock" placeholder="Enter brand">
+                <input type="number" class="form-control" name="stock" id="stock" placeholder="Enter brand" style="border-radius: 30px; padding: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #ddd;">
             </div>
 
             <div class="form-group">
                 <label for="stock"><b>dimension</b></label>
-                <input type="number" class="form-control" name="stock" id="stock" placeholder="Enter product dimension">
+                <input type="number" class="form-control" name="stock" id="stock" placeholder="Enter product dimension" style="border-radius: 30px; padding: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #ddd;">
             </div>
 
             <div class="form-group">
                 <label for="stock"><b>weight</b></label>
-                <input type="number" class="form-control" name="stock" id="stock" placeholder="Enter product weight">
+                <input type="number" class="form-control" name="stock" id="stock" placeholder="Enter product weight" style="border-radius: 30px; padding: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #ddd;">
             </div>
 
              <div class="form-group">
                  <label for="stock"><b>Stock</b></label>
-                 <input type="number" class="form-control" name="stock" id="stock" placeholder="Enter stock quantity">
+                 <input type="number" class="form-control" name="stock" id="stock" placeholder="Enter stock quantity" style="border-radius: 30px; padding: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #ddd;">
              </div>
  
              <div class="form-group">
                  <label for="image"><b>Image</b></label>
-                 <input type="file" class="form-control-file" name="img" id="image">
+                 <input type="file" class="form-control-file" name="img" id="image" style="border-radius: 30px; padding: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #ddd;">
              </div>
  
-             <button type="submit" class="btn btn-primary btn-block">Add Product</button>
+             <button type="submit" class="btn btn-primary btn-block" style="background: #3498db; border: none; border-radius: 30px; padding: 10px; font-size: 1.1rem; font-weight: bold; transition: background 0.3s;"
+             onmouseover="this.style.background='#2980b9';"
+             onmouseout="this.style.background='#3498db';">Add Product</button>
          </form>
      </div>
  

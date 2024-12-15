@@ -19,4 +19,7 @@ urlpatterns=[
     path('edit_pro/<pid>',views.edit_product),
     path('del_pro/<pid>',views.delete_product),
     path('add_cate',views.add_category),
+    path('ad_view_pro',views.ad_viewp),
+    path('ad_pro_dtls/<pid>',views.ad_pro_dtls),
+
 ]
