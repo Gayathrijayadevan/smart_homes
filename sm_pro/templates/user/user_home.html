@@ -1,118 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {%  load static %}
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Homes</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/u_style.css' %}">
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Homes</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/u_style.css' %}">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="background: #0e1527;">
-    <div class="container">
-      <a class="navbar-brand" href="user_home">
-        <img src="{% static 'images/sm_logo.png' %}" alt="Logo" style="height: 80px; transition: transform 0.3s ease-in-out;">
-    </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="about" style="color: white">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="store" style="color:white">Store</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style="color:white;">Categories</a>
-            <ul class="dropdown-menu">
-              {% for n in nav_cat %}
-              <li><a class="dropdown-item" href="">{{n.Category_name}}</a></li>
-              {% endfor %}
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" style="color: white" href="contact">Contact</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" style="color:white" href="logout">Logout</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg shadow-sm" style="background-color: #0e1527;">
+        <div class="container">
+            <a class="navbar-brand" href="user_home">
+                <img src="{% static 'images/sm_logo.png' %}" alt="Logo" style="height: 80px; transition: transform 0.3s ease-in-out;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="about" style="color: white">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="store" style="color:white">Store</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style="color:white;">Categories</a>
+                        <ul class="dropdown-menu">
+                            {% for n in nav_cat %}
+                            <li><a class="dropdown-item text-dark" href="store#{{n.Category_name}}">{{n.Category_name}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: white" href="contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white" href="logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-  <!-- Carousel -->
-<div id="demo" class="carousel slide" data-bs-ride="carousel">
+    <!-- Carousel -->
+    <div id="demo" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'images/carosel img1.jpg' %}" alt="Image 1" class="d-block w-100">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'images/carosel img2.jpg' %}" alt="Image 2" class="d-block w-100">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'images/carosel img3.jpg' %}" alt="Image 3" class="d-block w-100">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
 
-    <!-- Indicators/dots -->
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-      <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-      <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-    </div>
-  
-    <!-- The slideshow/carousel -->
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="{% static 'images/carosel img1.jpg' %}" alt="Los Angeles" class="d-block w-100">
-      </div>
-      <div class="carousel-item">
-        <img src="{% static 'images/carosel img2.jpg' %}" alt="Chicago" class="d-block w-100">
-      </div>
-      <div class="carousel-item">
-        <img src="{% static 'images/carosel img3.jpg' %}" alt="New York" class="d-block w-100">
-      </div>
-    </div>
-  
-    <!-- Left and right controls/icons -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-      <span class="carousel-control-next-icon"></span>
-    </button>
-  </div>
-  
-  <div class="container my-5" style="background-color: rgb(248, 249, 250);">
-    <div class="row">
-      <!-- Image Section -->
-      <div class="col-md-6 image-container">
-        <img src="{% static 'images/woman- smart oven.jpg' %}" alt="Smart Home Image" style="max-width: 100%; border-radius: 10px;">
-      </div>
-  
-      <!-- Text Section -->
-      <div class="col-md-6">
-        <h2 class="section-title">Live in the Future</h2>
-        <div class="feature-item" style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 30px; margin-top: 30px;">
-          <img src="{% static 'images/smartphone.png' %}" alt="" style="height:80px;">
-          <div class="feature-text">
-            <h5>Control Everything at Your Fingertips</h5>
-            <p>Turn on your lights, play your favorite music, or change your room temperature at the tap of your smartphone.</p>
-          </div>
+    <!-- Features Section -->
+    <div class="container my-5 text-light" style="background-color: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{% static 'images/woman- smart oven.jpg' %}" alt="Smart Home Image" style="max-width: 100%; border-radius: 10px;">
+            </div>
+            <div class="col-md-6">
+                <h2 class="section-title">Live in the Future</h2>
+                <div class="feature-item">
+                    <img src="{% static 'images/smartphone.png' %}" alt="" style="height: 80px;">
+                    <h5>Control Everything at Your Fingertips</h5>
+                    <p>Turn on your lights, play your favorite music, or change your room temperature at the tap of your smartphone.</p>
+                </div>
+                <div class="feature-item">
+                  <img src="{% static 'images/settings.png' %}" alt="" style="height: 80px;">
+                  <h5>Run Personalized Schedules</h5>
+                  <p>Have your coffee ready when you wake up. Automatically turn everything off when you leave for work. Experience true intelligence.</p>
+              </div>
+              <div class="feature-item">
+                <img src="{% static 'images/microphone.png' %}" alt="" style="height: 80px;">
+                <h5>Talk to Your Home or Make it Talk</h5>
+                <p>Simply talk to your virtual voice assistant and ask it to do anything for you—be it ordering groceries or solving a math problem.</p>
+            </div>
+            </div>
+            
         </div>
-        <div class="feature-item" style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 30px;">
-          <img src="{% static 'images/settings.png' %}" alt=""style="height:65px;">
-          <div class="feature-text">
-            <h5>Run Personalized Schedules</h5>
-            <p>Have your coffee ready when you wake up. Automatically turn everything off when you leave for work. Experience true intelligence.</p>
-          </div>
-        </div>
-        <div class="feature-item" style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 30px;">
-          <img src="{% static 'images/microphone.png' %}" alt="" style="height:75px;">
-          <div class="feature-text">
-            <h5>Talk to Your Home or Make it Talk</h5>
-            <p>Simply talk to your virtual voice assistant and ask it to do anything for you—be it ordering groceries or solving a math problem.</p>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
-  
-  <div class="container features-section">
+
+     
+  <div class="container features-section  text-light" style="background-color: #0e1527;">
     <div class="row text-center">
       <!-- Feature 1 -->
       <div class="col-md-3">
@@ -148,7 +137,12 @@
       </div>
     </div>
   </div>
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Smart Homes. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -35,3 +35,11 @@ class Buy(models.Model) :
     qty=models.IntegerField()
     price=models.IntegerField()
     date=models.DateField(auto_now_add=True)
+
+class Enquire(models.Model):
+    name=models.TextField()
+    email=models.EmailField()
+    product=models.TextField()
+    brand=models.TextField()
+    enq=models.TextField()
+    Phone=models.IntegerField()

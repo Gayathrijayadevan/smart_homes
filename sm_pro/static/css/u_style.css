@@ -1,128 +1,91 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Parkinsans:wght@300..800&display=swap');
-body 
-{
-    font-family: "Parkinsans", sans-serif;
-    font-optical-sizing: auto;
-    margin: 0;
-    padding: 0;
-    background-color: #0e1527;
-    color: #ffffff;
-}
 
-/* Navbar Styling */
-.navbar {
-  background-color: transparent; /* Transparent Navbar */
-  padding: 10px 30px;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 999;
-}
+        body {
+            font-family: "Parkinsans", sans-serif;
+            font-optical-sizing: auto;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            background-color: #0e1527;
+        }
 
-.navbar a {
-  color: #ffffff;
-  transition: color 0.3s ease;
-  text-decoration: none;
-}
+        /* Navbar Styling */
+        .navbar {
+            /* background-color: transparent; */
+            background: (100deg ,black);
+            padding: 10px 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 999;
+        }
 
-.navbar a:hover, .navbar a.active {
-  color: #fbbc05; /* Gold Highlight */
-}
+        .navbar a {
+            color: #ffffff;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
 
-/* Hero Section */
-.hero {
-  height: 100vh;
-  background: url('your-background-image.jpg') center/cover no-repeat;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+        .navbar a:hover, .navbar a.active {
+            color: #fbbc05;
+        }
 
-.hero h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  color: #ffffff;
-}
+        /* Carousel Image Styling */
+        .carousel-inner img {
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        }
 
-.hero p {
-  font-size: 1.2rem;
-  margin-top: 10px;
-  color: #dcdcdc;
-}
+        /* Section Styling */
+        .section-title {
+            color: #fbbc05;
+            font-weight: 700;
+            font-size: 2.5rem;
+        }
 
-.hero .cta-btn {
-  margin-top: 20px;
-  display: inline-block;
-  padding: 10px 20px;
-  border: 2px solid #fbbc05;
-  border-radius: 50px;
-  color: #fbbc05;
-  text-transform: uppercase;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
+        /* Features Section */
+        .feature-item img {
+            border: 2px solid #fbbc05;
+            border-radius: 50%;
+            padding: 10px;
+        }
 
-.hero .cta-btn:hover {
-  background-color: #fbbc05;
-  color: #0e1527;
-}
+        .feature-item h5 {
+            color: #fbbc05;
+        }
 
-/* Cards Styling */
-.card {
-  background-color: rgba(255, 255, 255, 0.05);
-  text-align: center;
-  padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  transition: transform 0.3s ease, border 0.3s ease;
-}
+        /* Cards Styling */
+.feature-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            text-align: center;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease, border 0.3s ease;
+        }
 
-.card:hover {
-  transform: translateY(-10px);
-  border-color: #fbbc05;
-}
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: #fbbc05;
+        }
 
-.card-icon {
-  font-size: 2.5rem;
-  color: #fbbc05;
-  margin-bottom: 10px;
-}
+        .feature-icon {
+            border: 2px solid #fbbc05;
+            border-radius: 50%;
+            padding: 10px;
+        }
 
-.card-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #ffffff;
-}
+        .feature-title {
+            color: #fbbc05;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
 
-.card-description {
-  font-size: 1rem;
-  color: #dcdcdc;
-}
-
-/* General Button Styling */
-.btn-custom {
-  color: #fbbc05;
-  border: 2px solid #fbbc05;
-  padding: 10px 20px;
-  border-radius: 50px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.btn-custom:hover {
-  background-color: #fbbc05;
-  color: #0e1527;
-}
-
-/* Footer (Optional) */
-footer {
-  background-color: #000;
-  color: #dcdcdc;
-  text-align: center;
-  padding: 20px 0;
-  margin-top: 50px;
-}
+        /* Footer Styling */
+        footer {
+            background-color: #000;
+            color: #dcdcdc;
+            text-align: center;
+            padding: 20px 0;
+        }
+  

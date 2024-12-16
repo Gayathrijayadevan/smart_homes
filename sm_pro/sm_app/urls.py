@@ -21,5 +21,5 @@ urlpatterns=[
     path('add_cate',views.add_category),
     path('ad_view_pro',views.ad_viewp),
     path('ad_pro_dtls/<pid>',views.ad_pro_dtls),
-
+    path('enquires',views.enquire),
 ]

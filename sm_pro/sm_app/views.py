@@ -140,6 +140,10 @@ def add_category(req):
         return render(req,'admin/cate.html' ,{'cate':categories})
     else:
         return render(req,'admin\cate.html')
+def enquire(req):
+    enq=Enquire.objects.all()    
+    return render(req,'admin/u_enquire.html' ,{'enquri':enq})
+
 #-------------user------------------------------
 def user_home  (req)  :
     categories=Category.objects.all()
@@ -165,14 +169,29 @@ def about(req) :
     return render(req,'user/about.html',{'nav_cat':categories})
 
 def contact(req) :
-    categories=Category.objects.all()
-    return render(req,'user/contact.html',{'nav_cat':categories})
-
+    if 'user' in req.session:
+        if req.method=='POST':
+            print(req.POST)
+            name=req.POST['fullname']
+            email=req.POST['email']
+            phone=req.POST['phone']
+            prod=req.POST['e_pro']
+            brand=req.POST['e_brand']
+            enqu=req.POST['enqri']
+            data=Enquire.objects.create(name=name,email=email,product=prod,Phone=phone,brand=brand,enq=enqu)
+            data.save()
+            print('data saved')
+        categories=Category.objects.all()
+        return render(req,'user/contact.html',{'nav_cat':categories})
+    else:
+        return redirect(user_home)  
+    
 def store(req):
 
-    # query=req.POST['searches']
-    # if query:
-    #     product=Product.objects.filter(Q())
+    query=req.POST['searches']
+    if query:
+        product=Product.objects.filter(Q())
+    categories=Category.objects.all()
 
     data=Category.objects.get(Category_name='lighting')
     lighting=Product.objects.filter(category=data)
@@ -183,7 +202,7 @@ def store(req):
     data=Category.objects.get(Category_name='home appliances')
     home_applia=Product.objects.filter(category=data)
 
-    return render(req,'user/store.html',{'light':lighting, 'multimedia':multimedia,'homeapp':home_applia})
+    return render(req,'user/store.html',{ 'nav_cat':categories,'light':lighting, 'multimedia':multimedia,'homeapp':home_applia})
 
 def view_pro_dtls(req,pid):
     pro_dtl=Product.objects.get(pk=pid)
@@ -201,7 +220,3 @@ def cart(req):
     data=Cart.objects.filter(user=user)
     return render(req,'user/cart.html',{'cart':data})
 
-def lighting(req):
-    data=Category.objects.get(Category_name='lighting')
-    lighting=Product.objects.filter(category=data)
-    return render(req,'',{'light':lighting})
