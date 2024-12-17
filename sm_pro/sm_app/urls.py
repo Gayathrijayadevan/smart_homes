@@ -13,6 +13,10 @@ urlpatterns=[
     path('store',views.store),
     path('pro_dtl/<pid>',views.view_pro_dtls),
     path('cart',views.cart),
+    path('add_to_cart/<int:pid>/', views.add_to_cart, name='add_to_cart'),
+    path('qty_in/<cid>',views.qty_in),
+    path('qty_dec/<cid>',views.qty_dec),
+    path('remove/<cid>',views.remove_pro),
     #------------ADMIN-----------------
     path('admin_home',views.admin_home),
     path('add_pro',views.add_products),

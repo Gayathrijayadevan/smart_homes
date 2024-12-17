@@ -11,7 +11,7 @@
 </head>
 <body>
     <a href="../store"><button style="border: 1px solid black; color:black; background: transparent;">Back</button></a>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
           <div class="col-sm-6 bg-primary">
             <img src="{{ pro.img.url }}" alt="Product Image" class="product-image img-fluid">
@@ -21,7 +21,7 @@
             <h4>Price: <del style="text-decoration: line-through;"class="text-dark">₹{{ pro.price }}</del>
                 <span class="fw-bold" style="color:#fbbc05">₹{{ pro.offer_price }}(Limited period offer)</span>
             </h4>
-            <a href="pro_dtl/{{pro.pk}}"><button type="button" class="btn"  style="color:#fbbc05">Info</button></a>
+            <a href="pro_dtl/{{pro.pk}}"><button type="button" class="btn"  style="color:#fbbc05">More</button></a>
           </div>
         </div>
       </div>

@@ -21,13 +21,16 @@
               <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                   <li class="nav-item">
+                    <a class="nav-link" href="user_home" style="color: white;">Home</a>
+                  </li>
+                  <li class="nav-item">
                     <a class="nav-link" href="about" style="color: white;">About</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="store" style="color: white;">Store</a>
                   </li>
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style="color: rgba(255,188,58,255);">Categories</a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style="color: white;">Categories</a>
                     <ul class="dropdown-menu">
                       {% for n in nav_cat %}
                       <li><a class="dropdown-item text-dark" href="store#{{n.Category_name}}">{{n.Category_name}}</a></li>
@@ -35,10 +38,13 @@
                   </ul>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" style="color: rgba(255,188,58,255);" href="contact">Contact</a>
+                    <a class="nav-link" style="color:white;" href="contact">Contact</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" style="color: rgba(255,188,58,255);" href="logout">Logout</a>
+                    <a class="nav-link" style="color: white;" href="logout">Logout</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="logout"><img src="{% static 'images/shopping-cart.png' %}" alt="" style="width: 30px; margin-left: 20px;"></a>
                   </li>
                 </ul>
               </div>

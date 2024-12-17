@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Parkinsans:wght@300..800&display=swap');
+/* Custom Styles */
+body {
+    font-family: "Parkinsans", sans-serif;
+    font-optical-sizing: auto;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 20px 0;
+}
+.table th, .table td {
+    vertical-align: middle;
+}
+.cart-totals {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.btn-custom {
+    background-color: #fbbc05;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+}
+.btn-custom:hover {
+    background-color: #e8a900;
+    color: #fff;
+}
+.apply-coupon input {
+    border-radius: 0;
+    height: 45px;
+}
+.btn-apply {
+    background-color: #333;
+    color: #fff;
+    border: none;
+}
+.btn-apply:hover {
+    background-color: #555;
+}
+.page-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
