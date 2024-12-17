@@ -46,10 +46,17 @@
 
             <div class="form-group">
                 <label for="Categories"><b>Category</b></label>
-                <input type="text" class="form-control" name="Category" id="Categories" placeholder="Enter category"
-                    value="{{ data.category.Category_name }}" style="border-radius: 30px; padding: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #ddd;">
+                <select class="form-control" id="brand" name="category" style="border-radius: 30px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #ddd;">
+                    <option value="{{ data.category.pk }}">{{ data.category.Category_name }}</option>
+                    {% for c in cate %}
+                    <option value="{{c.pk}}">{{ c.Category_name }}</option>
+                    {% endfor %}
+                </select>
+                
+                    
             </div>
-
+            <!-- value="{{ data.category.Category_name }}" style="border-radius: 30px; padding: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #ddd;"> -->
+            
             <div class="form-group">
                 <label for="stock"><b>Stock</b></label>
                 <input type="number" class="form-control" name="stock" id="stock" placeholder="Enter stock quantity"

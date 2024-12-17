@@ -4,6 +4,8 @@ body
 {
     font-family: "Parkinsans", sans-serif;
     font-optical-sizing: auto;
+    background-color: #0e1527;
+    color: #fbbc05;
 }
 .hero-section {
     background-image: url('../images/about.jpg');
@@ -22,7 +24,35 @@ body
 .card:hover {
     transform: scale(1.05);
     transition: transform 0.3s;
+    border: 1px solid #fbbc05;
 }
 .card{
     background-color: #e2e2e2;
+    color: #0e1527;
+}
+.footer {
+    background-color:#0e1527;
+    color: #fff;
+    padding: 40px 0;
+}
+
+.footer h5 {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 10px;
+}
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer .footer-bottom {
+    margin-top: 20px;
+    text-align: center;
+    display: flex;
 }

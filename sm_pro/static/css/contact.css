@@ -36,3 +36,29 @@ body {
     font-size: xx-large;
     margin-left: 50px;
 }
+.footer {
+    background-color:#0e1527;;
+    color: #fff;
+    padding: 40px 0;
+}
+
+.footer h5 {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 10px;
+}
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer .footer-bottom {
+    margin-top: 20px;
+    text-align: center;
+    display: flex;
+}

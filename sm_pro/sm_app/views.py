@@ -104,7 +104,7 @@ def edit_product(req, pid):
         product.price = pprice
         product.offer_price = oprice
         product.stock = pstock
-        product.category = Category.objects.get(Category_name=cate)  # Assuming category exists
+        product.category = Category.objects.get(Category_name=cate) 
         
         if file:
             product.img = file
@@ -112,9 +112,9 @@ def edit_product(req, pid):
         product.save()
         return redirect(admin_home)
     else:
-        # Fetch the current product data
+        cate=Category.objects.all()
         data = Product.objects.get(pk=pid)
-        return render(req, 'admin/edit_pro.html', {'data': data})
+        return render(req, 'admin/edit_pro.html', {'data': data,'cate':cate})
 
 
 def delete_product(req,pid):
@@ -140,6 +140,7 @@ def add_category(req):
         return render(req,'admin/cate.html' ,{'cate':categories})
     else:
         return render(req,'admin\cate.html')
+    
 def enquire(req):
     enq=Enquire.objects.all()    
     return render(req,'admin/u_enquire.html' ,{'enquri':enq})
@@ -187,23 +188,27 @@ def contact(req) :
         return redirect(user_home)  
     
 def store(req):
+ if req.method=='POST':
+    search=req.POST['searches']
+    if search:
+        product=Product.objects.filter(brand=search)|Product.objects.filter(name=search)
+        print(product)
+        return render(req,'user/search_result.html',{'pro':product})
+ else:
+        categories=Category.objects.all()
 
-    query=req.POST['searches']
-    if query:
-        product=Product.objects.filter(Q())
-    categories=Category.objects.all()
+        data=Category.objects.get(Category_name='lighting')
+        lighting=Product.objects.filter(category=data)
 
-    data=Category.objects.get(Category_name='lighting')
-    lighting=Product.objects.filter(category=data)
+        data=Category.objects.get(Category_name='multimedia')
+        multimedia=Product.objects.filter(category=data)
 
-    data=Category.objects.get(Category_name='multimedia')
-    multimedia=Product.objects.filter(category=data)
+        data=Category.objects.get(Category_name='home appliances')
+        home_applia=Product.objects.filter(category=data)
 
-    data=Category.objects.get(Category_name='home appliances')
-    home_applia=Product.objects.filter(category=data)
-
-    return render(req,'user/store.html',{ 'nav_cat':categories,'light':lighting, 'multimedia':multimedia,'homeapp':home_applia})
-
+        return render(req,'user/store.html',{ 'nav_cat':categories,'light':lighting, 'multimedia':multimedia,'homeapp':home_applia})
+    
+    
 def view_pro_dtls(req,pid):
     pro_dtl=Product.objects.get(pk=pid)
 

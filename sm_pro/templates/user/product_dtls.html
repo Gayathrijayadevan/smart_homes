@@ -10,12 +10,15 @@
     <link rel="stylesheet" href="{% static 'css/pro_dtl.css' %}">
 </head>
 <body>
-    <a href="store"><button style="border: 1px solid black; color:black; background: transparent;">Back</button></a>
+    <a href="../store"><button style="border: 1px solid black; color:black; background: transparent;">Back</button></a>
     <div class="container mt-5">
         <div class="row">
             <!-- Left Section: Image -->
             <div class="col-md-6 text-center">
                 <img src="{{ dtl.img.url }}" alt="Product Image" class="product-image img-fluid">
+                <br><br><h4>Price: <del style="text-decoration: line-through;"class="text-dark">₹{{ dtl.price }}</del>
+                    <span class="fw-bold" style="color:#fbbc05">₹{{ dtl.offer_price }}(Limited period offer)</span>
+                </h4>
             </div>
 
             <!-- Right Section: Title and List -->
