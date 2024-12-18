@@ -83,25 +83,25 @@
     </style>
 </head>
 <body>
+    <a href="user_home"><button style="border: 1px solid black; color:black; background: transparent;">Back</button></a>
     <div class="container">
         <div class="header">
             <h1>Your Booked Product</h1>
         </div>
+        {% for o in orders %}
         <div class="product-details">
             <div class="product-image">
-                <img src="https://via.placeholder.com/300" alt="Product Image">
+                <img src="{{o.product.img.url}}" alt="Product Image">
             </div>
             <div class="product-info">
-                <h2>Product Name</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
-                <div class="price">$99.99</div>
-                <p><strong>Order ID:</strong> 123456789</p>
-                <p><strong>Estimated Delivery:</strong> 20th December 2024</p>
+                <h2>{{o.product.name}}</h2>
+                <div class="price"><strong>Price:</strong>{{o.price}}</div>
+                <p><strong>Category:</strong>{{o.product.category.Category_name}}</p>
+                <p><strong>Order ID:</strong>{{o.id}}</p>
+                <p><strong>Estimated Delivery:</strong> processing</p>
             </div>
         </div>
-        <div class="actions">
-            <a href="#">Track Order</a>
-        </div>
+        {% endfor %}
     </div>
 </body>
 </html>

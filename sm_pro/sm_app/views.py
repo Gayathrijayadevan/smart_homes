@@ -151,8 +151,10 @@ def view_bookings(req):
 
 #-------------user------------------------------
 def user_home  (req)  :
-    categories=Category.objects.all()
-    return render(req,'user/user_home.html',{'nav_cat':categories})
+     if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        categories=Category.objects.all()
+        return render(req,'user/user_home.html',{'nav_cat':categories,'dtls':user})
 
 def register(req):
     if req.method=='POST':
@@ -268,7 +270,8 @@ def add_to_cart(req,pid):
     return redirect(store)
 
 def bookings(req):
-    return render(req,'user/bookings.html')
+    buy=Buy.objects.all()
+    return render(req,'user/bookings.html',{'orders':buy})
 
 def pro_buy(req,pid): 
     product=Product.objects.get(pk=pid)
