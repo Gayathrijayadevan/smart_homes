@@ -7,6 +7,27 @@ body {
     color: #333;
     margin: 20px 0;
 }
+/* Navbar Styling */
+.navbar {
+    /* background-color: transparent; */
+    background: (100deg ,black);
+    padding: 10px 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 999;
+}
+
+.navbar a {
+    color: #ffffff;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.navbar a:hover, .navbar a.active {
+    color: #fbbc05;
+}
+
 .table th, .table td {
     vertical-align: middle;
 }

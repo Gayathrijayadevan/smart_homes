@@ -19,6 +19,7 @@
                 <br><br><h4>Price: <del style="text-decoration: line-through;"class="text-dark">₹{{ dtl.price }}</del>
                     <span class="fw-bold" style="color:#fbbc05">₹{{ dtl.offer_price }}(Limited period offer)</span>
                 </h4>
+                <h5 style="margin-right: 380px;"> Stock:{{dtl.stock}}</h5>
             </div>
 
             <!-- Right Section: Title and List -->
@@ -65,7 +66,7 @@
         <div class="row mt-5 text-center">
             <div class="col-md-12">
                 <a href="{% url 'add_to_cart' dtl.pk %}" class="btn btn-call-to-action">ADD TO CART</a>
-                <a href="#" class="btn btn-call-to-action">BUY NOW</a>
+                <a href="pro_buy/{{dtl.pk}}" class="btn btn-call-to-action">BUY NOW</a>
             </div>
         </div>
     </div>

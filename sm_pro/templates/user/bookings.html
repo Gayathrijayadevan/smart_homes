@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booked Product</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Parkinsans:wght@300..800&display=swap');
+        body {
+            font-family: "Parkinsans", sans-serif;
+            font-optical-sizing: auto;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background:#fbbc05;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .product-details {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        .product-image {
+            flex: 1;
+            min-width: 200px;
+            max-width: 300px;
+            margin-right: 20px;
+        }
+        .product-image img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .product-info {
+            flex: 2;
+        }
+        .product-info h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .product-info p {
+            margin: 10px 0;
+            color: #666;
+        }
+        .price {
+            font-size: 20px;
+            color: #4CAF50;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .actions {
+            text-align: center;
+            padding: 20px;
+            background: #f9f9f9;
+        }
+        .actions a {
+            text-decoration: none;
+            background:#fbbc05;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .actions a:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Your Booked Product</h1>
+        </div>
+        <div class="product-details">
+            <div class="product-image">
+                <img src="https://via.placeholder.com/300" alt="Product Image">
+            </div>
+            <div class="product-info">
+                <h2>Product Name</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+                <div class="price">$99.99</div>
+                <p><strong>Order ID:</strong> 123456789</p>
+                <p><strong>Estimated Delivery:</strong> 20th December 2024</p>
+            </div>
+        </div>
+        <div class="actions">
+            <a href="#">Track Order</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -17,6 +17,9 @@ urlpatterns=[
     path('qty_in/<cid>',views.qty_in),
     path('qty_dec/<cid>',views.qty_dec),
     path('remove/<cid>',views.remove_pro),
+    path('booking',views.bookings),
+    path('pro_buy/<pid>',views.pro_buy),
+    path('cart_buy/<cid>',views.cart_buy),
     #------------ADMIN-----------------
     path('admin_home',views.admin_home),
     path('add_pro',views.add_products),

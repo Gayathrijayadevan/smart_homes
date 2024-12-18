@@ -145,6 +145,10 @@ def enquire(req):
     enq=Enquire.objects.all()    
     return render(req,'admin/u_enquire.html' ,{'enquri':enq})
 
+def view_bookings(req):
+    buy=Buy.objects.all()[::-1]
+    return render( req,'shop/view_bookings.html',{'booking':buy})
+
 #-------------user------------------------------
 def user_home  (req)  :
     categories=Category.objects.all()
@@ -221,14 +225,20 @@ def view_pro_dtls(req,pid):
     return render(req,'user/product_dtls.html', {'dtl':pro_dtl,'split_data':split_data,'des':des})
 
 def cart(req):
-    user=User.objects.get(username=req.session['user'])
-    data=Cart.objects.filter(user=user)
-    return render(req,'user/cart.html',{'cart':data})
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        data=Cart.objects.filter(user=user)
+        return render(req,'user/cart.html',{'cart':data})
+    else:
+        return render(req,'user/user_home.html')
 
-def qty_in(req,cid):
-    data=Cart.objects.get(pk=cid)
-    data.qty+=1
-    data.save()
+def qty_in(req, cid):
+    data = Cart.objects.get(pk=cid)
+    if data.qty < data.product.stock:
+        data.qty += 1
+        data.save()
+    else:
+        messages.warning(req, "You cannot add more than the available stock.")
     return redirect(cart)
 
 def qty_dec(req,cid):
@@ -256,3 +266,25 @@ def add_to_cart(req,pid):
         data=Cart.objects.create(product=product,user=user,qty=1)
         data.save()
     return redirect(store)
+
+def bookings(req):
+    return render(req,'user/bookings.html')
+
+def pro_buy(req,pid): 
+    product=Product.objects.get(pk=pid)
+    user=User.objects.get(username=req.session['user'])
+    qty=1
+    price=product.offer_price
+    buy=Buy.objects.create(product=product,user=user,qty=qty,price=price)
+    buy.save()
+    return redirect(store)
+
+def cart_buy(req,cid): 
+    crt=Cart.objects.get(pk=cid)    
+    product=crt.product
+    user=crt.user
+    qty=crt.qty
+    price=product.offer_price*qty
+    buy=Buy.objects.create(product=product,user=user,qty=qty,price=price)
+    buy.save()
+    return redirect(cart)

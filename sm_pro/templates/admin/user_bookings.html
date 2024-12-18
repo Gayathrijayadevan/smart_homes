@@ -29,22 +29,22 @@
             <thead>
                 <tr>
                     <th>User Name</th>
-                    <th>User Email</th>
-                    <th>Phone Number</th>
                     <th>Product</th>
+                    <th>Price</th>
+                    <th>Date</th>
                     <th>Brand</th>
-                    <th>Enquire</th>
+                    <th>Quantity</th>
                 </tr>
             </thead>
             <tbody>
                 {% for e in enquri %} 
                 <tr> 
-                    <td>{{e.name}}</td>
-                    <td>{{ e.email }}</td>
-                    <td>{{ e.Phone }}</td>
-                    <td>{{ e.product }}</td>
-                    <td>{{ e.brand }}</td>
+                    <td>{{e.first_name}}</td>
+                    <td>{{ e.name }}</td>
+                    <td>{{ e.price }}</td>
+                    <td>{{ e.date }}</td>
                     <td>{{ e.enq }}</td>
+                    <td>{{ e.Phone }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
