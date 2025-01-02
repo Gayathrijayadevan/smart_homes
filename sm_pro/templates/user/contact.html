@@ -29,7 +29,7 @@
                 <a class="nav-link" href="store" style="color: white;">Store</a>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style="color: rgba(255,188,58,255);">Categories</a>
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style="color:white">Categories</a>
                 <ul class="dropdown-menu">
                   {% for n in nav_cat %}
                   <li><a class="dropdown-item text-dark" href="store#{{n.Category_name}}">{{n.Category_name}}</a></li>
@@ -37,19 +37,38 @@
               </ul>
               </li>
               <li class="nav-item">
-                <a class="nav-link" style="color: rgba(255,188,58,255);" href="contact">Contact</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" style="color: rgba(255,188,58,255);" href="logout">Logout</a>
+                <a class="nav-link" style="color:white" href="contact">Contact</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="logout"><img src="{% static 'images/shopping-cart.png' %}" alt="" style="width: 30px; margin-left: 20px;"></a>
               </li>
+              <button class="btn " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
+                <img src="{% static 'images/user.png' %}" alt="" style="width: 30px;">
+              </button>
             </ul>
           </div>
         </div>
       </nav>
 
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasSidebarLabel">User Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="card" style="width:350px">
+                <img class="card-img-top" src="{% static 'images/man.png' %}" alt="Card image" style="width: 250px;">
+                <div class="card-body">
+                  <h4 class="card-title">{{dtls.username}}</h4>
+                  <p class="card-text">{{dtls.date_joined}}</p>
+                </div>
+              </div>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="booking" style="text-decoration: none; color: #0e1527;">My Orders</a></li>
+                <li class="list-group-item"><a href="logout" style="text-decoration: none; color: #0e1527;">Logout</a></li>
+            </ul>
+        </div>
+    </div>
         <!-- Hero Section -->
         <div class="hero-section">
             <h1 class="display-4 fw-bold">Get in Touch with Us</h1>
@@ -61,7 +80,7 @@
             <div class="row">
                 <!-- Contact Form -->
                 <div class="col-md-6">
-                    <h2 class="mb-4">Contact Form</h2>
+                    <h2 class="mb-4">Enquire Form</h2>
                     <form action="" method="post">
                       {% csrf_token %}
                         <div class="mb-3">

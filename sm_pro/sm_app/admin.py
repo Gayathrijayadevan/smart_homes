@@ -6,6 +6,7 @@ admin.site.register(Cart)
 admin.site.register(Category)
 admin.site.register(Enquire)
 admin.site.register(Buy)
+admin.site.register(User_details)
 
 
 

@@ -147,7 +147,7 @@ def enquire(req):
 
 def view_bookings(req):
     buy=Buy.objects.all()[::-1]
-    return render( req,'shop/view_bookings.html',{'booking':buy})
+    return render( req,'admin/user_bookings.html',{'booking':buy})
 
 #-------------user------------------------------
 def user_home  (req)  :
@@ -155,6 +155,8 @@ def user_home  (req)  :
         user=User.objects.get(username=req.session['user'])
         categories=Category.objects.all()
         return render(req,'user/user_home.html',{'nav_cat':categories,'dtls':user})
+     else:
+        return redirect(sm_login) 
 
 def register(req):
     if req.method=='POST':
@@ -172,8 +174,9 @@ def register(req):
         return render(req,'user/register.html') 
     
 def about(req) :
+    user=User.objects.get(username=req.session['user'])
     categories=Category.objects.all()
-    return render(req,'user/about.html',{'nav_cat':categories})
+    return render(req,'user/about.html',{'nav_cat':categories,'dtls':user})
 
 def contact(req) :
     if 'user' in req.session:
@@ -188,8 +191,9 @@ def contact(req) :
             data=Enquire.objects.create(name=name,email=email,product=prod,Phone=phone,brand=brand,enq=enqu)
             data.save()
             print('data saved')
+        user=User.objects.get(username=req.session['user'])
         categories=Category.objects.all()
-        return render(req,'user/contact.html',{'nav_cat':categories})
+        return render(req,'user/contact.html',{'nav_cat':categories,'dtls':user})
     else:
         return redirect(user_home)  
     
@@ -273,14 +277,91 @@ def bookings(req):
     buy=Buy.objects.all()
     return render(req,'user/bookings.html',{'orders':buy})
 
-def pro_buy(req,pid): 
-    product=Product.objects.get(pk=pid)
-    user=User.objects.get(username=req.session['user'])
-    qty=1
-    price=product.offer_price
-    buy=Buy.objects.create(product=product,user=user,qty=qty,price=price)
-    buy.save()
-    return redirect(store)
+def order(req,pid):
+    user = User.objects.get(username=req.session['user'])  
+
+    try:
+        detail = User_details.objects.get(user=user)
+    except User_details.DoesNotExist:
+        detail = None
+
+    if req.method == 'POST':
+        address = req.POST['address']
+        phone = req.POST['phone']
+        pincode = req.POST['pincode']
+        state = req.POST['state']
+        country = req.POST['country']
+
+        if detail:
+            detail.address = address
+            detail.phone = phone
+            detail.pincode = pincode
+            detail.state = state
+            detail.country = country
+            detail.save()
+        else:
+            User_details.objects.create(
+                user=user,
+                address=address,
+                phone=phone,
+                pincode=pincode,
+                state=state,
+                country=country,
+            )
+        return redirect('pay',pid=pid)
+
+    return render(req, 'user/order_details.html', {'detls': detail})
+
+def payment(req, pid):
+    if req.method == 'POST':
+        payment = req.POST.get('payment_method')
+        product = Product.objects.get(pk=pid)
+        
+        # Store data in session to pass to pro_buy
+        req.session['payment_data'] = {
+            'payment_method': payment,
+            'product_id': pid,
+        }
+        
+        return redirect('pro_buy')
+    
+    return render(req, 'user/payment.html', {'pid': pid})
+
+def pro_buy(req):
+    # Get data from session
+    payment_data = req.session.get('payment_data', {})
+    print(payment_data)
+    if payment_data:
+        # try:
+            # Get the stored data
+            payment_method = payment_data['payment_method']
+            product_id = payment_data['product_id']
+            print(payment_method,product_id)
+            
+            # Get the necessary objects
+            product = Product.objects.get(pk=product_id)
+            user = User.objects.get(username=req.session['user'])
+            user_dtl=User_details.objects.get(user=user)
+            
+            # Create the buy record
+            buy = Buy.objects.create(
+                product=product,
+                user=user_dtl,
+                qty=1,
+                price=product.offer_price,
+                payment_method=payment_method
+            )
+            buy.save()
+            # Clear the session data
+            del req.session['payment_data']
+            
+            return redirect('store')
+            
+        # except Exception as e:
+        #     print(f"Error in pro_buy: {e}")
+        #     return redirect('store')
+    
+    return redirect('store')
 
 def cart_buy(req,cid): 
     crt=Cart.objects.get(pk=cid)    

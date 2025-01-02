@@ -12,7 +12,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark" style="background: #0e1527; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); padding: 15px 0;">
         <div class="container">
             <a class="navbar-brand" href="admin_home">
-                <img src="{% static 'images/sm_logo.png' %}" alt="Logo"  style="height: 70px; transition: transform 0.3s ease-in-out;">
+                <img src="{% static 'images/sm_logo.png' %}" alt="Logo"  style="height: 70px; transition: transform 0.5s ease-in-out;">
             </a>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
@@ -22,7 +22,7 @@
         </div>
     </nav>
     <div class="container my-4" >
-        <h1 class="text-center">View Enquires</h1>
+        <h1 class="text-center">View User Bookings</h1>
         <!-- Products Table --> 
         <table class="table table-bordered" style=" background: white; border-radius: 10px; padding: 30px;">
             <h2 class="section-title" style="color: #0e1527; font-weight: bold;">{{ l.category.Category_name }}</h2>
@@ -32,19 +32,19 @@
                     <th>Product</th>
                     <th>Price</th>
                     <th>Date</th>
-                    <th>Brand</th>
                     <th>Quantity</th>
+                    <th>payment method</th>
                 </tr>
             </thead>
             <tbody>
-                {% for e in enquri %} 
+                {% for b in booking %} 
                 <tr> 
-                    <td>{{e.first_name}}</td>
-                    <td>{{ e.name }}</td>
-                    <td>{{ e.price }}</td>
-                    <td>{{ e.date }}</td>
-                    <td>{{ e.enq }}</td>
-                    <td>{{ e.Phone }}</td>
+                    <td>{{b.user.user.first_name}}</td>
+                    <td>{{ b.product.name }}</td>
+                    <td>{{ b.price }}</td>
+                    <td>{{ b.date }}</td>
+                    <td>{{ b.qty }}</td>
+                    <td>{{ b.payment_method }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

@@ -80,14 +80,14 @@
                     <td><p><button><a href="qty_dec/{{c.pk}}" style="text-decoration: none;">-</a></button>qty:<span class=" fw-bold">{{c.qty}}</span>
                       <button><a href="qty_in/{{c.pk}}"style="text-decoration: none;">+</a></button></p></td>
                     <td><a href="remove/{{c.pk}}"><button class="btn btn-danger btn-sm">&times;</button></a></td>
-                    <td><a href="cart_buy/{{c.pk}}"><button class="btn btn-danger btn-sm">Buy Now</button></a></td>
+                    <td><a href="order/{{c.pk}}"><button class="btn btn-danger btn-sm">Buy Now</button></a></td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 
-    <!-- Cart Totals -->
+    <!-- Cart Totals
     <div class="row mt-4">
         <div class="col-md-6 offset-md-6">
             <div class="cart-totals">
@@ -113,7 +113,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
