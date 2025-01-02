@@ -22,6 +22,7 @@ urlpatterns=[
     path('order/<pid>',views.order),
     path('pay/<pid>', views.payment, name='pay'),
     path('pro_buy/', views.pro_buy, name='pro_buy'),
+    path('order_remv/<oid>',views.remove_order),
 
     #------------ADMIN-----------------
     path('admin_home',views.admin_home),

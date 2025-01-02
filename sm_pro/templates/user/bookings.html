@@ -95,7 +95,10 @@
             </div>
             <div class="product-info">
                 <h2>{{o.product.name}}</h2>
-                <div class="price"><strong>Price:</strong>{{o.price}}</div>
+                <div class="price"><strong>Price:</strong>{{o.price}}
+                    <a href="order_remv/{{o.pk}}"><button class="btn btn-sm" style="margin-left:350px;background:#fbbc05;border:none;color:white; height:30px;">
+                        <b>Remove</b></button></a>
+                </div>
                 <p><strong>Category:</strong>{{o.product.category.Category_name}}</p>
                 <p><strong>Order ID:</strong>{{o.id}}</p>
                 <p><strong>Estimated Delivery:</strong> processing</p>

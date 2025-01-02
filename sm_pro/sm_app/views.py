@@ -277,6 +277,11 @@ def bookings(req):
     buy=Buy.objects.all()
     return render(req,'user/bookings.html',{'orders':buy})
 
+def remove_order(req,oid):
+    data=Buy.objects.get(pk=oid)
+    data.delete()
+    return redirect(bookings)
+
 def order(req,pid):
     user = User.objects.get(username=req.session['user'])  
 
