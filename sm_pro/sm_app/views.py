@@ -55,13 +55,14 @@ def ad_viewp(req):
 
 def ad_pro_dtls(req,pid):
     pro_dtl=Product.objects.get(pk=pid)
+    feedbacks = Feedback.objects.filter(product=pro_dtl).order_by('-submitted_at')
 
     data=pro_dtl.des.split('Product Features')
     des=data[0]
     fet=data[-1]
     split_data=fet.split('\n')
     split_data=[i for i in split_data if len(i)>5]
-    return render(req,'admin/pro_details.html', {'dtl':pro_dtl,'split_data':split_data,'des':des})
+    return render(req,'admin/pro_details.html', {'dtl':pro_dtl,'split_data':split_data,'des':des, 'feed':feedbacks})
 
 def add_products(req) :
     if 'admin' in req.session:
@@ -219,17 +220,66 @@ def store(req):
         return render(req,'user/store.html',{ 'nav_cat':categories,'light':lighting, 'multimedia':multimedia,'homeapp':home_applia})
     
     
-def view_pro_dtls(req,pid):
-    pro_dtl=Product.objects.get(pk=pid)
-
-    data=pro_dtl.des.split('Product Features')
-    des=data[0]
-    fet=data[-1]
-    split_data=fet.split('\n')
-    split_data=[i for i in split_data if len(i)>5]
-    print(split_data)
-    return render(req,'user/product_dtls.html', {'dtl':pro_dtl,'split_data':split_data,'des':des})
-
+def view_pro_dtls(req, pid):
+    # try:
+        pro_dtl = Product.objects.get(pk=pid)
+        
+        # Handle form submission
+        if req.method == 'POST':
+            # try:
+                user = User.objects.get(username=req.session['user'])
+                
+                # Check if user has already reviewed this product
+                existing_feedback = Feedback.objects.filter(user=user, product=pro_dtl).exists()
+                if existing_feedback:
+                    messages.error(req, 'You have already reviewed this product.')
+                    return redirect('view_pro_dtls', pid=pid)
+                
+                message = req.POST['message']
+                rating = req.POST['rating']
+                
+                feedback = Feedback.objects.create(
+                    user=user,
+                    product=pro_dtl,
+                    message=message,
+                    rating=rating,
+                )
+                messages.success(req, 'Thank you for your feedback!')
+                return redirect('view_pro_dtls', pid=pid)
+            # except Exception as e:
+            #     messages.error(req, 'Error submitting feedback. Please try again.')
+            #     return redirect('view_pro_dtls', pid=pid)
+        
+        # Process product description
+        data = pro_dtl.des.split('Product Features')
+        des = data[0]
+        fet = data[-1]
+        split_data = [i for i in fet.split('\n') if len(i)>5]
+        
+        # Get all feedback for this specific product
+        feedbacks = Feedback.objects.filter(product=pro_dtl).order_by('-submitted_at')
+        
+        # Check if current user has already reviewed
+        user = User.objects.get(username=req.session['user'])
+        user_has_reviewed = Feedback.objects.filter(user=user, product=pro_dtl).exists()
+        
+        context = {
+            'dtl': pro_dtl,
+            'split_data': split_data,
+            'des': des,
+            'feedbacks': feedbacks,
+            'user_has_reviewed': user_has_reviewed
+        }
+        
+        return render(req, 'user/product_dtls.html', context)
+        
+    # except Product.DoesNotExist:
+    #     messages.error(req, 'Product not found.')
+    #     return redirect(user_home)  
+    # except Exception as e:
+    #     messages.error(req, 'An error occurred. Please try again.')
+    #     return redirect(user_home)  
+    
 def cart(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])

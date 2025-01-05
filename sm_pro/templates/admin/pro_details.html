@@ -59,7 +59,24 @@
                 </div>
             </div>
         </div>
-
+        {% for feedback in feed %}
+                        <div class="review-item {% if not forloop.last %}border-bottom{% endif %} py-3" style="border: 1px solid rgb(204, 202, 202);box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); ">
+                            <div class="d-flex justify-content-between"style="border: 1px solid rgb(204, 202, 202);" >
+                                <div>
+                                    <strong>{{ feedback.user.name }}</strong>
+                                    <small class="text-muted ms-2">
+                                        {{ feedback.submitted_at|date:"F d, Y" }}
+                                    </small>
+                                </div>
+                                <div class="rating">
+                                    {% for i in '12345' %}
+                                        <i class="fas fa-star {% if forloop.counter <= feedback.rating %}text-warning{% else %}text-muted{% endif %}"></i>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <p class="mt-2 mb-0">{{ feedback.message }}</p>
+                        </div>
+        {% endfor %}
         <!-- Call to Action -->
         <div class="row mt-5 text-center">
             <div class="col-md-12">

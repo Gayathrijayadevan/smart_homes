@@ -53,5 +53,14 @@ class Enquire(models.Model):
     enq=models.TextField()
     Phone=models.IntegerField()
 
+class Feedback(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    message = models.TextField()
+    rating = models.IntegerField(default=5)  # 1 to 5 rating
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Feedback from {self.user.name}"
 
 

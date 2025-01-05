@@ -6,6 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details</title>
     <!-- Bootstrap CSS -->
+    <style>
+        .rating-stars {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .star-label {
+            cursor: pointer;
+            padding: 0.3rem;
+            border-radius: 0.25rem;
+        }
+        
+        .btn-check:checked + .star-label {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: white;
+        }
+        
+        .btn-check:hover + .star-label {
+            background-color: #ffca2c;
+            border-color: #ffca2c;
+        }
+        
+        .review-item:last-child {
+            border-bottom: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/pro_dtl.css' %}">
 </head>
@@ -61,6 +89,88 @@
                 </div>
             </div>
         </div>
+
+           <!-- Feedback Section -->
+    <div class="container mt-4">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if not user_has_reviewed %}
+            <!-- Feedback Form -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Write a Review</h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Rating</label>
+                            <div class="rating-stars">
+                                {% for i in '12345' %}
+                                    <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" class="btn-check" required>
+                                    <label class="btn btn-outline-warning star-label" for="star{{ i }}">
+                                        <i class="fas fa-star"></i>
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Your Review</label>
+                            <textarea 
+                                class="form-control" 
+                                id="message" 
+                                name="message" 
+                                rows="3" 
+                                required 
+                                placeholder="Share your experience with this product"
+                            ></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-info mb-4">
+                You have already reviewed this product. Thank you for your feedback!
+            </div>
+        {% endif %}
+
+        <!-- Display Reviews -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Product Reviews</h5>
+                
+                {% if feedbacks %}
+                    {% for feedback in feedbacks %}
+                        <div class="review-item {% if not forloop.last %}border-bottom{% endif %} py-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <strong>{{ feedback.user.name }}</strong>
+                                    <small class="text-muted ms-2">
+                                        {{ feedback.submitted_at|date:"F d, Y" }}
+                                    </small>
+                                </div>
+                                <div class="rating">
+                                    {% for i in '12345' %}
+                                        <i class="fas fa-star {% if forloop.counter <= feedback.rating %}text-warning{% else %}text-muted{% endif %}"></i>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <p class="mt-2 mb-0">{{ feedback.message }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-center text-muted my-3">No reviews yet. Be the first to review this product!</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 
         <!-- Call to Action -->
         <div class="row mt-5 text-center">
