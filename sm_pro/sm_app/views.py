@@ -35,11 +35,16 @@ def sm_logout(req):
     return redirect(sm_login)
 #--------------------admin----------------------
 def admin_home(req):
-    # if 'admin' in req.session:
     #     data=Product.objects.all()
     return render(req,'admin/ad_home.html')
     # else:
     #     return redirect(sm_login)
+def view_users(req):
+    if 'admin' in req.session:
+        user=User.objects.all()
+        return render(req,'admin/view_users.html',{'user':user})
+    else:
+        return redirect(admin_home)
 
 def ad_viewp(req):
     data=Category.objects.get(Category_name='lighting')

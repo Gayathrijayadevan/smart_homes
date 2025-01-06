@@ -34,4 +34,6 @@ urlpatterns=[
     path('ad_pro_dtls/<pid>',views.ad_pro_dtls),
     path('enquires',views.enquire),
     path('u_bookings',views.view_bookings),
+    path('view_users',views.view_users),
+
 ]
