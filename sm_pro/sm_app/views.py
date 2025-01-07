@@ -47,17 +47,9 @@ def view_users(req):
         return redirect(admin_home)
 
 def ad_viewp(req):
-    data=Category.objects.get(Category_name='lighting')
-    lighting=Product.objects.filter(category=data)
-
-    data=Category.objects.get(Category_name='multimedia')
-    multimedia=Product.objects.filter(category=data)
-
-    data=Category.objects.get(Category_name='home appliances')
-    home_applia=Product.objects.filter(category=data)
-
-    return render(req,'admin/view_pro.html',{'light':lighting, 'multimedia':multimedia,'homeapp':home_applia})
-
+    categories = Category.objects.all()  
+    category_products = {category: Product.objects.filter(category=category) for category in categories} 
+    return render(req, 'admin/view_pro.html', {'nav_cat': categories, 'category_products': category_products})
 def ad_pro_dtls(req,pid):
     pro_dtl=Product.objects.get(pk=pid)
     feedbacks = Feedback.objects.filter(product=pro_dtl).order_by('-submitted_at')
@@ -78,10 +70,13 @@ def add_products(req) :
             pprice=req.POST['price']
             oprice=req.POST['off_price']
             cate=req.POST['category']
+            brand=req.POST['brand']
+            dimension=req.POST['dimen']
+            wei=req.POST['weight']
             pstock=req.POST['stock']
             file=req.FILES['img']
             cat=Category.objects.get(pk=cate)
-            data=Product.objects.create(pid=pid,name=pname,des=des,price=pprice,offer_price=oprice,categorie=cat,stock=pstock,img=file)
+            data=Product.objects.create(pid=pid,name=pname,des=des,price=pprice,offer_price=oprice,category=cat,brand=brand,dimension=dimension,weight=wei,stock=pstock,img=file)
             data.save()
             return redirect(admin_home)
         else:
@@ -97,20 +92,26 @@ def edit_product(req, pid):
         des = req.POST['descrip']
         pprice = req.POST['price']
         oprice = req.POST['off_price']
-        cate = req.POST['Category']
+        cate_id = req.POST['category']  # Retrieve category ID from the form
+        brand = req.POST['brand']
+        dimension = req.POST['dimen']
+        wei = req.POST['weight']
         pstock = req.POST['stock']
         file = req.FILES.get('img')
-        
+
         product = Product.objects.get(pk=pid)
 
-        # Update fields with the new values
+        # Update fields
         product.pid = proid
         product.name = pname
         product.des = des
         product.price = pprice
         product.offer_price = oprice
+        product.brand = brand
+        product.dimension = dimension
+        product.weight = wei
         product.stock = pstock
-        product.category = Category.objects.get(Category_name=cate) 
+        product.category = Category.objects.get(id=cate_id)  # Use ID to get the category
         
         if file:
             product.img = file
@@ -118,9 +119,9 @@ def edit_product(req, pid):
         product.save()
         return redirect(admin_home)
     else:
-        cate=Category.objects.all()
+        cate = Category.objects.all()
         data = Product.objects.get(pk=pid)
-        return render(req, 'admin/edit_pro.html', {'data': data,'cate':cate})
+        return render(req, 'admin/edit_pro.html', {'data': data, 'cate': cate})
 
 
 def delete_product(req,pid):
@@ -211,19 +212,9 @@ def store(req):
         print(product)
         return render(req,'user/search_result.html',{'pro':product})
  else:
-        categories=Category.objects.all()
-
-        data=Category.objects.get(Category_name='lighting')
-        lighting=Product.objects.filter(category=data)
-
-        data=Category.objects.get(Category_name='multimedia')
-        multimedia=Product.objects.filter(category=data)
-
-        data=Category.objects.get(Category_name='home appliances')
-        home_applia=Product.objects.filter(category=data)
-
-        return render(req,'user/store.html',{ 'nav_cat':categories,'light':lighting, 'multimedia':multimedia,'homeapp':home_applia})
-    
+        categories = Category.objects.all()  # Fetch all categories
+        category_products = {category: Product.objects.filter(category=category) for category in categories}  # Fetch products per category
+        return render(req, 'user/store.html', {'nav_cat': categories, 'category_products': category_products})
     
 def view_pro_dtls(req, pid):
     # try:
