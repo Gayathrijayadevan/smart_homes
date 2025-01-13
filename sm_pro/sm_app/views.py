@@ -32,7 +32,7 @@ def sm_login(req):
 def sm_logout(req):
     logout(req)
     req.session.flush() 
-    return redirect(sm_login)
+    return redirect(user_home)
 #--------------------admin----------------------
 def admin_home(req):
     #     data=Product.objects.all()
@@ -50,6 +50,7 @@ def ad_viewp(req):
     categories = Category.objects.all()  
     category_products = {category: Product.objects.filter(category=category) for category in categories} 
     return render(req, 'admin/view_pro.html', {'nav_cat': categories, 'category_products': category_products})
+    
 def ad_pro_dtls(req,pid):
     pro_dtl=Product.objects.get(pk=pid)
     feedbacks = Feedback.objects.filter(product=pro_dtl).order_by('-submitted_at')
@@ -157,16 +158,23 @@ def view_bookings(req):
     return render( req,'admin/user_bookings.html',{'booking':buy})
 
 #-------------user------------------------------
-def user_home  (req)  :
-     if 'user' in req.session:
-        user=User.objects.get(username=req.session['user'])
-        categories=Category.objects.all()
-        return render(req,'user/user_home.html',{'nav_cat':categories,'dtls':user})
-     else:
-        return redirect(sm_login) 
+def user_home(req):
+    categories = Category.objects.all()
+    user = None
+    if 'user' in req.session:
+        user = User.objects.get(username=req.session['user'])
+    return render(req, 'user/user_home.html', {'nav_cat': categories, 'dtls': user})
+
+# def user_profile(req):
+#     if 'user' in req.session:
+#         user = User.objects.get(username=req.session['user'])
+#         return render(req, 'user/user_home.html', {'dtls': user, 'nav_cat': Category.objects.all()})
+#     else:
+#         return redirect(user_home)
+
 
 def register(req):
-    if req.method=='POST':
+    if req.method=='POST':  
         uname=req.POST['uname']
         email=req.POST['email']
         pswd=req.POST['pswd']
@@ -181,28 +189,31 @@ def register(req):
         return render(req,'user/register.html') 
     
 def about(req) :
-    user=User.objects.get(username=req.session['user'])
-    categories=Category.objects.all()
+    categories = Category.objects.all()
+    user = None
+    if 'user' in req.session:
+        user = User.objects.get(username=req.session['user'])
     return render(req,'user/about.html',{'nav_cat':categories,'dtls':user})
 
 def contact(req) :
-    if 'user' in req.session:
-        if req.method=='POST':
-            print(req.POST)
-            name=req.POST['fullname']
-            email=req.POST['email']
-            phone=req.POST['phone']
-            prod=req.POST['e_pro']
-            brand=req.POST['e_brand']
-            enqu=req.POST['enqri']
-            data=Enquire.objects.create(name=name,email=email,product=prod,Phone=phone,brand=brand,enq=enqu)
-            data.save()
-            print('data saved')
+    categories=Category.objects.all()
+    if req.method=='POST':
+        print(req.POST)
+        name=req.POST['fullname']
+        email=req.POST['email']
+        phone=req.POST['phone']
+        prod=req.POST['e_pro']
+        brand=req.POST['e_brand']
+        enqu=req.POST['enqri']
+        data=Enquire.objects.create(name=name,email=email,product=prod,Phone=phone,brand=brand,enq=enqu)
+        data.save()
+        print('data saved')
+    user = None    
+    if 'user' in req.session:        
         user=User.objects.get(username=req.session['user'])
-        categories=Category.objects.all()
-        return render(req,'user/contact.html',{'nav_cat':categories,'dtls':user})
     else:
-        return redirect(user_home)  
+        return redirect(sm_login)  
+    return render(req,'user/contact.html',{'nav_cat':categories,'dtls':user})
     
 def store(req):
  if req.method=='POST':
@@ -217,6 +228,7 @@ def store(req):
         return render(req, 'user/store.html', {'nav_cat': categories, 'category_products': category_products})
     
 def view_pro_dtls(req, pid):
+    if 'user' in req.session:
     # try:
         pro_dtl = Product.objects.get(pk=pid)
         
@@ -268,6 +280,8 @@ def view_pro_dtls(req, pid):
         }
         
         return render(req, 'user/product_dtls.html', context)
+    else:
+        return redirect(sm_login)
         
     # except Product.DoesNotExist:
     #     messages.error(req, 'Product not found.')
@@ -320,8 +334,11 @@ def add_to_cart(req,pid):
     return redirect(store)
 
 def bookings(req):
-    buy=Buy.objects.all()
-    return render(req,'user/bookings.html',{'orders':buy})
+    if 'user' in req.session:
+        buy=Buy.objects.all()
+        return render(req,'user/bookings.html',{'orders':buy})
+    else:
+        return redirect(sm_login)
 
 def remove_order(req,oid):
     data=Buy.objects.get(pk=oid)
