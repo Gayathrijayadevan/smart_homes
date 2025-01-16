@@ -50,7 +50,7 @@
               <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                   <li class="nav-item">
-                    <a class="nav-link" href="user_home" style="color: white;">Home</a>
+                    <a class="nav-link" href="../" style="color: white;">Home</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="about" style="color: white;">About</a>
@@ -96,6 +96,7 @@
                 <ul class="list-group">
                     <li class="list-group-item"><a href="booking" style="text-decoration: none; color: #0e1527;">My Orders</a></li>
                     <li class="list-group-item"><a href="logout" style="text-decoration: none; color: #0e1527;">Logout</a></li>
+                    <li class="list-group-item"><a href="login" style="text-decoration: none; color: #0e1527;">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -118,7 +119,7 @@
       </header>
 
       {% for category, products in category_products.items %}
-  <div class="container" id="{{ category.Category_name|slugify }}">
+  <div class="container" id="{{ category.Category_name}}">
       <h2 class="section-title">{{ category.Category_name }}</h2>
       <div class="row gy-4">
           {% for product in products %}
@@ -218,11 +219,11 @@
         </div>
         {% endfor %} -->
 
-          <div class="sale-banner">
+          <!-- <div class="sale-banner">
             <h1>View All of Our On-Sale Items</h1>
             <p>For a limited time only, all of our vintage products are 50% off! Don’t miss your chance to save big on these wonderful items.</p>
             <a href="#" class="btn btn-outline-light">Shop Now</a>
-        </div>
+        </div> -->
 
          <!-- Footer Section -->
     <footer class="footer" >

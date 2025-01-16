@@ -7,6 +7,8 @@ admin.site.register(Category)
 admin.site.register(Enquire)
 admin.site.register(Buy)
 admin.site.register(User_details)
+admin.site.register(Schedule)
+
 
 
 

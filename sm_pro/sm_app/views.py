@@ -4,6 +4,11 @@ from django.contrib import messages
 from .models import *
 from django.contrib.auth.models import User
 import os
+from django.conf import settings
+import razorpay
+import json
+from django.views.decorators.csrf import csrf_exempt
+
 
 # Create your views here.
 def sm_login(req):
@@ -157,6 +162,10 @@ def view_bookings(req):
     buy=Buy.objects.all()[::-1]
     return render( req,'admin/user_bookings.html',{'booking':buy})
 
+def view_vists(req):
+    visit=Schedule.objects.all()
+    return render(req,'admin/view_vists.html',{'data':visit})
+
 #-------------user------------------------------
 def user_home(req):
     categories = Category.objects.all()
@@ -216,15 +225,24 @@ def contact(req) :
     return render(req,'user/contact.html',{'nav_cat':categories,'dtls':user})
     
 def store(req):
- if req.method=='POST':
-    search=req.POST['searches']
-    if search:
-        product=Product.objects.filter(brand=search)|Product.objects.filter(name=search)
-        print(product)
-        return render(req,'user/search_result.html',{'pro':product})
- else:
-        categories = Category.objects.all()  # Fetch all categories
-        category_products = {category: Product.objects.filter(category=category) for category in categories}  # Fetch products per category
+    if req.method == 'POST':
+        search = req.POST['searches']
+        if search:
+            product = Product.objects.filter(brand=search) | Product.objects.filter(name=search)
+            print(product)
+            # Check if the query returned any results
+            if product.exists():
+                return render(req, 'user/search_result.html', {'pro': product})
+            else:
+                # If no results found, pass a message to the template
+                return render(req, 'user/search_result.html', {
+                    'pro': None,
+                    'no_results': True,
+                    'search_term': search
+                })
+    else:
+        categories = Category.objects.all()
+        category_products = {category: Product.objects.filter(category=category) for category in categories}
         return render(req, 'user/store.html', {'nav_cat': categories, 'category_products': category_products})
     
 def view_pro_dtls(req, pid):
@@ -296,7 +314,7 @@ def cart(req):
         data=Cart.objects.filter(user=user)
         return render(req,'user/cart.html',{'cart':data})
     else:
-        return render(req,'user/user_home.html')
+        return redirect(sm_login)
 
 def qty_in(req, cid):
     data = Cart.objects.get(pk=cid)
@@ -383,35 +401,96 @@ def order(req,pid):
 def payment(req, pid):
     if req.method == 'POST':
         payment = req.POST.get('payment_method')
-        product = Product.objects.get(pk=pid)
-        
-        # Store data in session to pass to pro_buy
-        req.session['payment_data'] = {
-            'payment_method': payment,
-            'product_id': pid,
-        }
-        
-        return redirect('pro_buy')
+        print(payment)
+        if payment=='online':
+            product = Product.objects.get(pk=pid)
+            user=User.objects.get(username=req.session['user'])  
+            pro=product.offer_price
+            print(pro)
+            
+            req.session['payment_data'] = {
+                'payment_method': payment,
+                'product_id': pid,
+            }
+
+            name='anadhu'
+            amount='3000'
+            client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+            razorpay_order = client.order.create(
+            {"amount": int(amount) * 100, "currency": "INR", "payment_capture": "1"}
+                )
+            order_id=razorpay_order['id']
+            order = Order.objects.create(
+            name=name, amount=amount, provider_order_id=order_id
+                )
+            order.save()
+            return render(
+                    req,
+                    "user/online_pay.html",
+                    {
+                        "callback_url": "http://" + "127.0.0.1:8000" + "razorpay/callback",
+                        "razorpay_key": settings.RAZORPAY_KEY_ID,
+                        "order": order,
+                        "product":product ,
+                        "user":user
+                    },
+                )
     
     return render(req, 'user/payment.html', {'pid': pid})
 
+@csrf_exempt
+def callback(request):
+    def verify_signature(response_data):
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        return client.utility.verify_payment_signature(response_data)
+
+    if "razorpay_signature" in request.POST:
+        payment_id = request.POST.get("razorpay_payment_id", "")
+        provider_order_id = request.POST.get("razorpay_order_id", "")
+        signature_id = request.POST.get("razorpay_signature", "")
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        order.payment_id = payment_id
+        order.signature_id = signature_id
+        order.save()
+        if not verify_signature(request.POST):
+            order.status = PaymentStatus.SUCCESS
+            order.save()
+            return render(request, "callback.html", context={"status": order.status})   # callback giving html page
+            #  or  return redirect(function name of callback giving html page)
+        else:
+            order.status = PaymentStatus.FAILURE
+            order.save()
+            return render(request, "callback.html", context={"status": order.status})  # callback giving html page
+            #  or  return redirect(function name of callback giving html page)
+
+    else:
+        payment_id = json.loads(request.POST.get("error[metadata]")).get("payment_id")
+        provider_order_id = json.loads(request.POST.get("error[metadata]")).get(
+            "order_id"
+        )
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        order.payment_id = payment_id
+        order.status = PaymentStatus.FAILURE
+        order.save()
+        return render(request, "callback.html", context={"status": order.status})  # callback giving html page
+        #  or  return redirect(function name of callback giving html page)
+
+
+
+
 def pro_buy(req):
-    # Get data from session
     payment_data = req.session.get('payment_data', {})
     print(payment_data)
     if payment_data:
         # try:
-            # Get the stored data
             payment_method = payment_data['payment_method']
             product_id = payment_data['product_id']
             print(payment_method,product_id)
             
-            # Get the necessary objects
             product = Product.objects.get(pk=product_id)
             user = User.objects.get(username=req.session['user'])
             user_dtl=User_details.objects.get(user=user)
             
-            # Create the buy record
             buy = Buy.objects.create(
                 product=product,
                 user=user_dtl,
@@ -431,12 +510,19 @@ def pro_buy(req):
     
     return redirect('store')
 
-def cart_buy(req,cid): 
-    crt=Cart.objects.get(pk=cid)    
-    product=crt.product
-    user=crt.user
-    qty=crt.qty
-    price=product.offer_price*qty
-    buy=Buy.objects.create(product=product,user=user,qty=qty,price=price)
-    buy.save()
-    return redirect(cart)
+
+def visit(req):
+    if 'user' in req.session:
+        if req.method == 'POST':
+            name = req.POST.get('name')
+            email = req.POST.get('email')
+            phone = req.POST.get('phone')
+            time = req.POST.get('time')
+            date=req.POST.get('date')
+            data=Schedule.objects.create(name=name,email=email,Phone=phone,date=date,time=time)
+            data.save()
+            return render(req,'user/user_home.html')
+        else:    
+          return render(req,'user/schedule.html')
+    else:
+        return redirect(sm_login)

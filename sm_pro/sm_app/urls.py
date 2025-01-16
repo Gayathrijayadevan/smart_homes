@@ -20,11 +20,13 @@ urlpatterns=[
     path('qty_dec/<cid>',views.qty_dec),
     path('remove/<cid>',views.remove_pro),
     path('booking',views.bookings),
-    path('cart_buy/<cid>',views.cart_buy),
     path('order/<pid>',views.order),
     path('pay/<pid>', views.payment, name='pay'),
     path('pro_buy/', views.pro_buy, name='pro_buy'),
     path('order_remv/<oid>',views.remove_order),
+    path('visit',views.visit),
+    path("payment/", views.payment, name="payment"),
+    path("razorpay/callback/", views.callback, name="callback"),
 
     #------------ADMIN-----------------
     path('add_pro',views.add_products),
@@ -36,5 +38,5 @@ urlpatterns=[
     path('enquires',views.enquire),
     path('u_bookings',views.view_bookings),
     path('view_users',views.view_users),
-
+    path('view visit',views.view_vists),
 ]

@@ -22,7 +22,7 @@
         </div>
     </nav>
     <div class="container my-4" >
-        <h1 class="text-center">View Enquires</h1>
+        <h1 class="text-center">View visit</h1>
         <!-- Products Table --> 
         <table class="table table-bordered" style=" background: white; border-radius: 10px; padding: 30px;">
             <h2 class="section-title" style="color: #0e1527; font-weight: bold;">{{ l.category.Category_name }}</h2>
@@ -31,20 +31,16 @@
                     <th>User Name</th>
                     <th>User Email</th>
                     <th>Phone Number</th>
-                    <th>Product</th>
-                    <th>Brand</th>
-                    <th>Enquire</th>
+                    <th>Time of visit</th>
                 </tr>
             </thead>
             <tbody>
-                {% for e in enquri %} 
+                {% for d in data %} 
                 <tr> 
-                    <td>{{e.name}}</td>
-                    <td>{{ e.email }}</td>
-                    <td>{{ e.Phone }}</td>
-                    <td>{{ e.product }}</td>
-                    <td>{{ e.brand }}</td>
-                    <td>{{ e.enq }}</td>
+                    <td>{{d.name}}</td>
+                    <td>{{ d.email }}</td>
+                    <td>{{ d.Phone }}</td>
+                    <td>{{ d.time }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
