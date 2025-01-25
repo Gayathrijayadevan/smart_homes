@@ -11,6 +11,12 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 # Create your views here.
+
+
+
+#-----------------login------------------------
+
+
 def sm_login(req):
         if 'admin' in req.session:
             return redirect(admin_home)
@@ -34,16 +40,27 @@ def sm_login(req):
         else:
             return render(req,'login.html')
 
+
+
+#--------------------logout--------------------------------
 def sm_logout(req):
     logout(req)
     req.session.flush() 
     return redirect(user_home)
-#--------------------admin----------------------
+
+
+
+
+#--------------------admin functions-------------------------
 def admin_home(req):
     #     data=Product.objects.all()
     return render(req,'admin/ad_home.html')
     # else:
     #     return redirect(sm_login)
+
+
+
+#-------------------fetching user details for admin to view---------------------
 def view_users(req):
     if 'admin' in req.session:
         user=User.objects.all()
@@ -51,11 +68,22 @@ def view_users(req):
     else:
         return redirect(admin_home)
 
+
+
+
+#-------------------collecting all products according to there category for admin to view---------------------
+
 def ad_viewp(req):
     categories = Category.objects.all()  
     category_products = {category: Product.objects.filter(category=category) for category in categories} 
     return render(req, 'admin/view_pro.html', {'nav_cat': categories, 'category_products': category_products})
-    
+
+
+
+
+
+#-------------------collecting product detail of specific product also the user feedback for that product---------------------
+
 def ad_pro_dtls(req,pid):
     pro_dtl=Product.objects.get(pk=pid)
     feedbacks = Feedback.objects.filter(product=pro_dtl).order_by('-submitted_at')
@@ -67,6 +95,35 @@ def ad_pro_dtls(req,pid):
     split_data=[i for i in split_data if len(i)>5]
     return render(req,'admin/pro_details.html', {'dtl':pro_dtl,'split_data':split_data,'des':des, 'feed':feedbacks})
 
+
+
+
+
+#-------------------------function to add new  product categories----------------------------
+def add_category(req):
+    if 'admin' in req.session:
+        if req.method=='POST':
+            c_name=req.POST['cate_name']
+            c_name=c_name.lower()
+            try:
+                cate=Category.objects.get(Category_name=c_name)
+            except:
+                data=Category.objects.create(Category_name=c_name)
+                data.save()
+            return redirect(add_category)
+        categories=Category.objects.all()
+        return render(req,'admin/cate.html' ,{'cate':categories})
+    else:
+        return render(req,'admin\cate.html')
+
+
+
+
+
+
+
+
+#---------------------------admin adding products-----------------------------------
 def add_products(req) :
     if 'admin' in req.session:
         if req.method=='POST':
@@ -91,6 +148,12 @@ def add_products(req) :
     else:
         return redirect(sm_login)    
     
+
+
+
+
+
+#---------------------function for admin to edit already existing product details or leave it as it is--------------------------    
 def edit_product(req, pid):
     if req.method == 'POST':
         proid = req.POST['proid']
@@ -117,7 +180,7 @@ def edit_product(req, pid):
         product.dimension = dimension
         product.weight = wei
         product.stock = pstock
-        product.category = Category.objects.get(id=cate_id)  # Use ID to get the category
+        product.category = Category.objects.get(id=cate_id)  # Use id to get the category
         
         if file:
             product.img = file
@@ -126,10 +189,15 @@ def edit_product(req, pid):
         return redirect(admin_home)
     else:
         cate = Category.objects.all()
-        data = Product.objects.get(pk=pid)
+        data = Product.objects.get(pk=pid)# collecting & passing the already exsisting pro_details
         return render(req, 'admin/edit_pro.html', {'data': data, 'cate': cate})
 
 
+
+
+
+
+#-----------------function to delete the product from shop----------------------------------------
 def delete_product(req,pid):
     data=Product.objects.get(pk=pid)
     file=data.img.url
@@ -138,50 +206,46 @@ def delete_product(req,pid):
     data.delete()
     return redirect(admin_home)    
 
-def add_category(req):
-    if 'admin' in req.session:
-        if req.method=='POST':
-            c_name=req.POST['cate_name']
-            c_name=c_name.lower()
-            try:
-                cate=Category.objects.get(Category_name=c_name)
-            except:
-                data=Category.objects.create(Category_name=c_name)
-                data.save()
-            return redirect(add_category)
-        categories=Category.objects.all()
-        return render(req,'admin/cate.html' ,{'cate':categories})
-    else:
-        return render(req,'admin\cate.html')
-    
+
+
+
+
+
+
+#-------------------------- admin function to view all user enquires-------------------------------
 def enquire(req):
     enq=Enquire.objects.all()    
     return render(req,'admin/u_enquire.html' ,{'enquri':enq})
 
+
+
+
+
+
+#-------------------------- admin function to view all user bookings-------------------------------
 def view_bookings(req):
     buy=Buy.objects.all()[::-1]
     return render( req,'admin/user_bookings.html',{'booking':buy})
+
+
+
+
+
+#-------------------------- admin function to view all user scheduled store visits-------------------------------
 
 def view_vists(req):
     visit=Schedule.objects.all()
     return render(req,'admin/view_vists.html',{'data':visit})
 
-#-------------user------------------------------
-def user_home(req):
-    categories = Category.objects.all()
-    user = None
-    if 'user' in req.session:
-        user = User.objects.get(username=req.session['user'])
-    return render(req, 'user/user_home.html', {'nav_cat': categories, 'dtls': user})
-
-# def user_profile(req):
-#     if 'user' in req.session:
-#         user = User.objects.get(username=req.session['user'])
-#         return render(req, 'user/user_home.html', {'dtls': user, 'nav_cat': Category.objects.all()})
-#     else:
-#         return redirect(user_home)
 
 
+
+
+#-----------------------------USER FUNCTIONS -----------------------------
+
+
+
+#-----------------------function for user registration--------------------
 def register(req):
     if req.method=='POST':  
         uname=req.POST['uname']
@@ -196,13 +260,38 @@ def register(req):
         return redirect(sm_login) 
     else:
         return render(req,'user/register.html') 
-    
+
+
+
+#-----------------function for user dashboard------------------------
+def user_home(req):
+    categories = Category.objects.all()
+    user = None
+    if 'user' in req.session:
+        user = User.objects.get(username=req.session['user']) #retriving the user deatils only if the user is in the session
+    return render(req, 'user/user_home.html', {'nav_cat': categories, 'dtls': user})
+
+
+
+
+
+
+
+#-----------------function for user about page------------------------    
 def about(req) :
     categories = Category.objects.all()
     user = None
     if 'user' in req.session:
         user = User.objects.get(username=req.session['user'])
     return render(req,'user/about.html',{'nav_cat':categories,'dtls':user})
+
+
+
+
+
+
+
+#-----------------function for user contact page------------------------    
 
 def contact(req) :
     categories=Category.objects.all()
@@ -215,15 +304,23 @@ def contact(req) :
         brand=req.POST['e_brand']
         enqu=req.POST['enqri']
         data=Enquire.objects.create(name=name,email=email,product=prod,Phone=phone,brand=brand,enq=enqu)
-        data.save()
+        data.save()         #collecting the  user enquire details and storing it in enquire model
         print('data saved')
     user = None    
     if 'user' in req.session:        
-        user=User.objects.get(username=req.session['user'])
+        user=User.objects.get(username=req.session['user'])#retriving the user deatils only if the user is in the session and passing it to the page
     else:
         return redirect(sm_login)  
     return render(req,'user/contact.html',{'nav_cat':categories,'dtls':user})
-    
+
+
+
+
+
+
+
+
+#-----------------function for user store page that include product searching  and displaying products under each category------------------------    
 def store(req):
     if req.method == 'POST':
         search = req.POST['searches']
@@ -242,15 +339,23 @@ def store(req):
                 })
     else:
         categories = Category.objects.all()
-        category_products = {category: Product.objects.filter(category=category) for category in categories}
+        category_products = {category: Product.objects.filter(category=category) for category in categories}   #collecting all products according to there category
         return render(req, 'user/store.html', {'nav_cat': categories, 'category_products': category_products})
     
+
+
+
+
+
+
+
+
+#--------------------function to view details of specific product and also give feedback-----------------------
 def view_pro_dtls(req, pid):
     if 'user' in req.session:
     # try:
         pro_dtl = Product.objects.get(pk=pid)
         
-        # Handle form submission
         if req.method == 'POST':
             # try:
                 user = User.objects.get(username=req.session['user'])
@@ -258,10 +363,10 @@ def view_pro_dtls(req, pid):
                 # Check if user has already reviewed this product
                 existing_feedback = Feedback.objects.filter(user=user, product=pro_dtl).exists()
                 if existing_feedback:
-                    messages.error(req, 'You have already reviewed this product.')
+                    messages.error(req, 'You have already reviewed this product.') #message if user has already reviewed the product
                     return redirect('view_pro_dtls', pid=pid)
                 
-                message = req.POST['message']
+                message = req.POST['message'] # else collecting the feedback and storing it in feedback model
                 rating = req.POST['rating']
                 
                 feedback = Feedback.objects.create(
@@ -272,9 +377,7 @@ def view_pro_dtls(req, pid):
                 )
                 messages.success(req, 'Thank you for your feedback!')
                 return redirect('view_pro_dtls', pid=pid)
-            # except Exception as e:
-            #     messages.error(req, 'Error submitting feedback. Please try again.')
-            #     return redirect('view_pro_dtls', pid=pid)
+            
         
         # Process product description
         data = pro_dtl.des.split('Product Features')
@@ -301,13 +404,15 @@ def view_pro_dtls(req, pid):
     else:
         return redirect(sm_login)
         
-    # except Product.DoesNotExist:
-    #     messages.error(req, 'Product not found.')
-    #     return redirect(user_home)  
-    # except Exception as e:
-    #     messages.error(req, 'An error occurred. Please try again.')
-    #     return redirect(user_home)  
     
+
+
+
+
+
+
+
+#--------------------function to view cart--------------------------
 def cart(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
@@ -316,6 +421,14 @@ def cart(req):
     else:
         return redirect(sm_login)
 
+
+
+
+
+
+
+
+#-------------------function to increase the quantity of product and stop when it exceeds the stock---------------------------
 def qty_in(req, cid):
     data = Cart.objects.get(pk=cid)
     if data.qty < data.product.stock:
@@ -325,6 +438,14 @@ def qty_in(req, cid):
         messages.warning(req, "You cannot add more than the available stock.")
     return redirect(cart)
 
+
+
+
+
+
+
+
+#----------------------------function to decrease the quantity  and remove the product if quantity is 0---------------------
 def qty_dec(req,cid):
     data=Cart.objects.get(pk=cid)
     data.qty-=1
@@ -334,11 +455,25 @@ def qty_dec(req,cid):
         data.delete()
     return redirect(cart)
 
+
+
+
+
+
+
+#-------------------------------function to remove products from cart---------------------------------------------
 def remove_pro(req,cid):
     data=Cart.objects.get(pk=cid)
     data.delete()
     return redirect(store)
 
+
+
+
+
+
+
+#--------------------function to add products into the cart--------------------------
 def add_to_cart(req,pid):
     product=Product.objects.get(pk=pid)   
     user=User.objects.get(username=req.session['user'])
@@ -351,6 +486,13 @@ def add_to_cart(req,pid):
         data.save()
     return redirect(store)
 
+
+
+
+
+
+
+#---------------------------function to view all user booking if user in session----------------------
 def bookings(req):
     if 'user' in req.session:
         buy=Buy.objects.all()
@@ -358,11 +500,27 @@ def bookings(req):
     else:
         return redirect(sm_login)
 
+
+
+
+
+
+
+
+#--------------------function to remove order--------------------------------------------------
 def remove_order(req,oid):
     data=Buy.objects.get(pk=oid)
     data.delete()
     return redirect(bookings)
 
+
+
+
+
+
+
+
+#---------------function to collect order details and to display if user in session has add one already------------------
 def order(req,pid):
     user = User.objects.get(username=req.session['user'])  
 
@@ -398,11 +556,20 @@ def order(req,pid):
 
     return render(req, 'user/order_details.html', {'detls': detail})
 
+
+
+
+
+
+
+
+
+#-----------------function for payment gateway---------------------
 def payment(req, pid):
     if req.method == 'POST':
         payment = req.POST.get('payment_method')
         print(payment)
-        if payment=='online':
+        if payment=='online':                      #if user choice online payment go through payment gateway
             product = Product.objects.get(pk=pid)
             user=User.objects.get(username=req.session['user'])  
             pro=product.offer_price
@@ -478,6 +645,12 @@ def callback(request):
 
 
 
+
+
+
+
+
+#--------------------------function to add the payment and product details to buy model--------------------
 def pro_buy(req):
     payment_data = req.session.get('payment_data', {})
     print(payment_data)
@@ -511,6 +684,15 @@ def pro_buy(req):
     return redirect('store')
 
 
+
+
+
+
+
+
+
+
+#-----------------------function to store the scheduled store visits details--------------------------
 def visit(req):
     if 'user' in req.session:
         if req.method == 'POST':
